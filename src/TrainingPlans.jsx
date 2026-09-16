@@ -1,5 +1,5 @@
 import { Plus } from "./icons.jsx";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { formatMinutes } from "../shared/time.mjs";
 import { workoutTypes } from "../shared/workout.mjs";
 import { planProgress, planSessionStatus } from "../shared/plan-progress.mjs";
@@ -17,7 +17,35 @@ export default function TrainingPlans({
   onCreate,
   onOpen,
   onEditGoal,
+  api,
+  onReview,
+  onContinue,
+  hasAppliedPlan,
 }) {
+  const [jobs, setJobs] = useState([]);
+  const [jobError, setJobError] = useState("");
+  const [retry, setRetry] = useState(0);
+  useEffect(() => {
+    let alive = true,
+      timer;
+    const load = async () => {
+      try {
+        const next = await api("/plan/jobs");
+        if (alive) {
+          setJobs(next);
+          setJobError("");
+        }
+      } catch (e) {
+        if (alive) setJobError(e.message);
+      }
+      if (alive) timer = setTimeout(load, 4000);
+    };
+    load();
+    return () => {
+      alive = false;
+      clearTimeout(timer);
+    };
+  }, [retry]);
   const [scope, setScope] = useState("all");
   const ordered = [...sessions]
     .filter((s) => scope === "all" || s.goalId === scope)
@@ -37,6 +65,57 @@ export default function TrainingPlans({
           훈련 계획 만들기
         </button>
       </div>
+      {hasAppliedPlan && (
+        <div className="planning-actions">
+          <button className="button" onClick={onContinue}>
+            다음 블록 이어서 계획
+          </button>
+          <span className="helper">
+            이전 목표를 이어받고 최근 활동과 회복을 다시 확인합니다.
+          </span>
+        </div>
+      )}
+      {jobError && (
+        <section className="card" role="alert">
+          <p>생성 상태를 확인할 수 없습니다: {jobError}</p>
+          <button className="button" onClick={() => setRetry((n) => n + 1)}>
+            다시 확인
+          </button>
+        </section>
+      )}
+      {jobs
+        .filter((j) => j.status !== "applied")
+        .slice(0, 1)
+        .map((j) => (
+          <section className="card planning-job" key={j.id} aria-live="polite">
+            <h2>
+              {j.status === "running"
+                ? "AI가 훈련 계획을 생성하고 있어요"
+                : j.status === "failed"
+                  ? "계획 생성을 완료하지 못했어요"
+                  : "검토할 훈련 계획이 준비됐어요"}
+            </h2>
+            <p>{j.status === "failed" ? j.error : j.stage}</p>
+            {j.status === "running" && (
+              <p className="helper">
+                다른 탭을 사용하거나 새로고침해도 서버에서 계속 진행합니다.
+              </p>
+            )}
+            {j.status === "ready" && (
+              <button
+                className="button primary"
+                onClick={() => onReview(j.draftId)}
+              >
+                생성된 계획 검토
+              </button>
+            )}
+            {j.status === "failed" && (
+              <button className="button" onClick={() => onCreate()}>
+                조건 확인 후 다시 생성
+              </button>
+            )}
+          </section>
+        ))}
       <section className="card training-plan-overview">
         <div className="row between">
           <h2>훈련 진행 상황</h2>

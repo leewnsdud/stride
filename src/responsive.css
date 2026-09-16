@@ -19,8 +19,8 @@ body {
 #coach-conversation-panel .coach-scope select,
 #coach-conversation-panel .chat-input textarea,
 #review-conversation-panel .chat-input textarea {
-  font-size:clamp(.875rem, .825rem + .2vw, .9375rem);
-  line-height:1.6;
+  font-size: clamp(0.875rem, 0.825rem + 0.2vw, 0.9375rem);
+  line-height: 1.6;
 }
 .app .main-content .page-heading h1 {
   font-size: var(--type-page);
@@ -154,7 +154,9 @@ body {
 .app .activity-list-card .list-toolbar .tabs {
   margin-left: auto;
 }
-.coach-page[hidden] { display: none !important; }
+.coach-page[hidden] {
+  display: none !important;
+}
 .activity-name-search {
   position: relative;
   display: flex;
@@ -172,7 +174,9 @@ body {
   right: 12px;
   min-height: 30px;
 }
-.activity-name-search input::-webkit-search-cancel-button { -webkit-appearance: none; }
+.activity-name-search input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
 .app .range-popover {
   position: absolute;
   top: calc(100% + 8px);
@@ -394,7 +398,8 @@ body {
   gap: 8px;
   font-size: var(--type-body);
 }
-.app .review-scenario select {
+.app .review-scenario select,
+.app .modal .plan-coach select {
   box-sizing: border-box;
   width: 100%;
   min-width: 0;
@@ -408,6 +413,9 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2349627c' stroke-width='1.8'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 12px center;
+}
+.app .modal .plan-coach select {
+  font-size: clamp(0.875rem, 0.825rem + 0.2vw, 0.9375rem);
 }
 .progress-months {
   display: flex;
@@ -677,6 +685,166 @@ body {
 }
 
 /* Native chart selectors stay compact, with an inset decorative chevron. */
+.planning-day-options,
+.planning-terrain-options {
+  border: 0;
+  padding: 0;
+  margin: 0 0 24px;
+  min-width: 0;
+}
+.planning-day-options legend,
+.planning-terrain-options legend {
+  margin-bottom: 12px;
+  font-size: var(--type-body);
+}
+.planning-day-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  grid-column: 1 / -1;
+}
+.planning-day-options label {
+  position: relative;
+  flex: 1;
+  min-width: 36px;
+}
+.planning-day-options input {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+.planning-day-options span {
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  border: 1px solid #bdcede;
+  background: #f8fafc;
+  border-radius: 12px;
+  color: #536c84;
+}
+.planning-day-options input:checked + span {
+  background: #526f8d;
+  color: white;
+  border-color: #526f8d;
+}
+.planning-day-options input:focus-visible + span {
+  outline: 2px solid #325d85;
+  outline-offset: 3px;
+}
+.planning-day-options input:disabled + span {
+  opacity: 0.4;
+}
+.planning-terrain-options {
+  grid-column: 1 / -1;
+}
+.app .planning-principles {
+  grid-column: 1 / -1;
+  margin: 8px 0 16px;
+  background: #e4ecf4;
+}
+.planning-cycle {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px;
+  margin: 16px 0;
+}
+.planning-cycle article {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  background: #e1eaf3;
+  border-radius: 12px;
+}
+.planning-cycle :is(small, span) {
+  color: #536b81;
+  font-size: 12px;
+}
+.app .planning-actions {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.app .completed-plan {
+  padding: clamp(16px, 3vw, 24px);
+  color: #273f55;
+}
+.app .completed-plan h2 {
+  font-size: var(--type-section);
+  line-height: 1.4;
+}
+.app .completed-plan > p {
+  font-size: var(--type-body);
+  line-height: 1.7;
+  margin: 12px 0;
+}
+.app .completed-plan .plan-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  padding: 16px;
+  background: #e3ecf4;
+  border-radius: 16px;
+  margin: 20px 0;
+}
+.app .completed-plan .plan-summary span {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #526b83;
+  font-size: 12px;
+}
+.app .completed-plan .plan-summary strong {
+  color: #2e4c66;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+}
+.app .workout-detail-row {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid #d5e0eb;
+  font-size: var(--type-body);
+  line-height: 1.75;
+}
+.app .workout-detail-row strong {
+  color: #526f8d;
+  font-size: 13px;
+  font-weight: 500;
+}
+.app .workout-detail-row p {
+  margin: 0;
+}
+.app .workout-summary-notes {
+  white-space: pre-line;
+  color: #60758a;
+}
+.app .completed-plan .workout-flow b {
+  color: #3d6081;
+}
+.app .completed-plan .workout-flow strong {
+  font-size: 14px;
+}
+.app .completed-plan .workout-explanation {
+  margin: 20px 0;
+}
+@media (max-width: 400px) {
+  .app .completed-plan .plan-summary {
+    grid-template-columns: 1fr;
+  }
+  .app .completed-plan .plan-summary span {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .app .workout-detail-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
 .app .activity-analysis .analysis-toolbar > h3 {
   margin: 0;
 }
@@ -689,7 +857,7 @@ body {
   min-height: 36px;
   padding: 6px 36px 6px 12px;
   border-radius: 10px;
-  font-size: clamp(.875rem, .825rem + .2vw, .9375rem);
+  font-size: clamp(0.875rem, 0.825rem + 0.2vw, 0.9375rem);
   line-height: 1.4;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='m2 4 4 4 4-4' fill='none' stroke='%23526f8d' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
@@ -697,33 +865,128 @@ body {
   background-size: 12px;
 }
 
-.review-metadata { display:flex; flex-direction:column; min-width:0; gap:4px; margin:0; color:#65788a; font-size:clamp(.75rem, .7rem + .15vw, .8125rem); line-height:1.5; }
-.review-metadata .review-date { margin:0; text-align:left; font-size:inherit; }
-.review-perspective-label { color:#405c75; font-size:clamp(.8125rem, .75rem + .2vw, .875rem); font-weight:500; overflow-wrap:anywhere; }
-.review-conversation { margin-top:24px; padding-top:20px; border-top:1px solid #d6e0e9; }
-.review-conversation h4 { margin:0; font-size:var(--type-body); }
-.app .review-conversation .chat-input { margin:16px 0 0; width:100%; box-sizing:border-box; padding:12px; align-items:flex-end; }
-.app .modal .review-conversation .chat-input textarea { font-size:clamp(.875rem, .825rem + .2vw, .9375rem); line-height:1.6; }
-.review-reply { margin:16px 0; padding:12px 0; }
-.review-reply.user { padding:12px 16px; border-radius:16px; background:#e5edf5; }
-.review-reply small { color:#65788a; }
-.review-reply p:last-child { margin-bottom:0; }
+.review-metadata {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 4px;
+  margin: 0;
+  color: #65788a;
+  font-size: clamp(0.75rem, 0.7rem + 0.15vw, 0.8125rem);
+  line-height: 1.5;
+}
+.review-metadata .review-date {
+  margin: 0;
+  text-align: left;
+  font-size: inherit;
+}
+.review-perspective-label {
+  color: #405c75;
+  font-size: clamp(0.8125rem, 0.75rem + 0.2vw, 0.875rem);
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.review-conversation {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #d6e0e9;
+}
+.review-conversation h4 {
+  margin: 0;
+  font-size: var(--type-body);
+}
+.app .review-conversation .chat-input {
+  margin: 16px 0 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  align-items: flex-end;
+}
+.app .modal .review-conversation .chat-input textarea {
+  font-size: clamp(0.875rem, 0.825rem + 0.2vw, 0.9375rem);
+  line-height: 1.6;
+}
+.review-reply {
+  margin: 16px 0;
+  padding: 12px 0;
+}
+.review-reply.user {
+  padding: 12px 16px;
+  border-radius: 16px;
+  background: #e5edf5;
+}
+.review-reply small {
+  color: #65788a;
+}
+.review-reply p:last-child {
+  margin-bottom: 0;
+}
 
-
-
-.review-conversation-heading { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px 16px; padding-top:16px; }
-.review-conversation-heading .text-button { margin-left:auto; white-space:nowrap; }
-.app .review-conversation textarea { min-width:0; width:100%; }
+.review-conversation-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  padding-top: 16px;
+}
+.review-conversation-heading .text-button {
+  margin-left: auto;
+  white-space: nowrap;
+}
+.app .review-conversation textarea {
+  min-width: 0;
+  width: 100%;
+}
 
 /* One coach session: scrollable message history above the persistent composer. */
-.app .review-conversation.session-chat { margin:0; padding:0; border-top:0; }
-.app .review-conversation .review-conversation-heading { margin-bottom:12px; }
-.app .review-conversation .messages { height:clamp(320px, 58dvh, 520px); min-height:0; padding:12px 0; overflow-y:auto; overscroll-behavior:contain; }
-.app .review-conversation .message { flex-shrink:0; }
-.app .review-conversation .message.user { margin-left:auto; max-width:90%; }
+.app .review-conversation.session-chat {
+  margin: 0;
+  padding: 0;
+  border-top: 0;
+}
+.app .review-conversation .review-conversation-heading {
+  margin-bottom: 12px;
+}
+.app .review-conversation .messages {
+  height: clamp(320px, 58dvh, 520px);
+  min-height: 0;
+  padding: 12px 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.app .review-conversation .message {
+  flex-shrink: 0;
+}
+.app .review-conversation .message.user {
+  margin-left: auto;
+  max-width: 90%;
+}
 
-#coach-conversation-panel .coach-composer { margin-top:16px; padding-top:16px; }
-.coach-review-context { margin:0 0 12px; padding:0 2px; text-align:left; }
-.coach-review-context > span { display:block; font-size:clamp(.8125rem, .75rem + .2vw, .875rem); font-weight:500; line-height:1.5; color:#405c75; }
-#coach-conversation-panel .coach-review-context > p { margin:4px 0 0; font-size:clamp(.75rem, .7rem + .15vw, .8125rem); line-height:1.6; color:#65788a; }
-#coach-conversation-panel .chat-note { margin:10px 0 0; padding:0; line-height:1.6; }
+#coach-conversation-panel .coach-composer {
+  margin-top: 16px;
+  padding-top: 16px;
+}
+.coach-review-context {
+  margin: 0 0 12px;
+  padding: 0 2px;
+  text-align: left;
+}
+.coach-review-context > span {
+  display: block;
+  font-size: clamp(0.8125rem, 0.75rem + 0.2vw, 0.875rem);
+  font-weight: 500;
+  line-height: 1.5;
+  color: #405c75;
+}
+#coach-conversation-panel .coach-review-context > p {
+  margin: 4px 0 0;
+  font-size: clamp(0.75rem, 0.7rem + 0.15vw, 0.8125rem);
+  line-height: 1.6;
+  color: #65788a;
+}
+#coach-conversation-panel .chat-note {
+  margin: 10px 0 0;
+  padding: 0;
+  line-height: 1.6;
+}

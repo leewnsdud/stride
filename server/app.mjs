@@ -33,6 +33,8 @@ import {
 import { coachingSkill } from "./coaching-skill.mjs";
 import { POLICY_VERSION } from "../shared/training-policy.mjs";
 import { reviewContext, REVIEW_PROMPT } from "./activity-review.mjs";
+import { planningContext } from "./planning-context.mjs";
+import { planningAIPrompt, validateAIProposal } from "./planning-ai.mjs";
 export function createApp({
   dataDir = path.resolve("data"),
   integrations = providers,
@@ -68,6 +70,14 @@ export function createApp({
     : {};
   let syncing = false,
     coaching = false;
+  for (const ds of ["live", "demo"])
+    for (const job of store.list(ds, "planning-job"))
+      if (job.status === "running")
+        store.put(ds, "planning-job", {
+          ...job,
+          status: "failed",
+          error: "서버가 재시작되어 생성이 중단됐습니다. 다시 요청해주세요.",
+        });
   app.use((req, res, next) => {
     const access = checkAccess({
       method: req.method,
@@ -102,6 +112,7 @@ export function createApp({
       today: today(),
       goals: store.list(ds, "goal"),
       sessions,
+      hasAppliedPlan: store.list(ds, "plan-draft").some((d) => d.applied),
       activities,
       summary: summarize(sessions, activities),
       conversations: store
@@ -258,6 +269,11 @@ export function createApp({
   app.get("/api/plan/intake", (req, res) =>
     res.json({
       draft: store.get(req.dataset, "planning", "intake") || null,
+      previousBlock:
+        store
+          .list(req.dataset, "plan-draft")
+          .filter((d) => d.applied)
+          .sort((a, b) => b.appliedAt.localeCompare(a.appliedAt))[0] || null,
       baseline: baselineFromActivities(
         store.list(req.dataset, "activity"),
         today(),
@@ -282,24 +298,171 @@ export function createApp({
       }),
     );
   });
-  app.post("/api/plan/coaching-preview", (req, res) => {
-    const plan = buildCoachedPlan(req.body, today());
-    checkPlanningGoals(req.dataset, plan.profile);
+  const savePlanningDraft = (ds, answers, extra = {}) => {
+    const plan = planningContext(store, ds, buildCoachedPlan(answers, today()));
+    checkPlanningGoals(ds, plan.profile);
     const conflicts = store
-      .sessions(req.dataset)
+      .sessions(ds)
       .filter((s) => plan.sessions.some((n) => n.date === s.date))
       .map((s) => ({ date: s.date, title: s.title }));
     if (conflicts.length)
       plan.blockers.push(
         "같은 날짜에 기존 훈련이 있습니다. 시작일이나 가능한 요일을 바꿔주세요. 기존 훈련을 자동으로 덮어쓰지 않습니다.",
       );
-    const draft = store.put(req.dataset, "plan-draft", {
+    return store.put(ds, "plan-draft", {
       ...plan,
+      ...extra,
       conflicts,
       createdAt: new Date().toISOString(),
       applied: false,
     });
+  };
+  app.post("/api/plan/coaching-preview", (req, res) => {
+    res.json(savePlanningDraft(req.dataset, req.body));
+  });
+  app.get("/api/plan/jobs", (req, res) => {
+    res.json(
+      store
+        .list(req.dataset, "planning-job")
+        .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+        .slice(0, 10),
+    );
+  });
+  app.get("/api/plan/drafts/:id", (req, res) => {
+    const draft = store.get(req.dataset, "plan-draft", req.params.id);
+    if (!draft)
+      return res.status(404).json({ error: "검토할 계획을 찾을 수 없습니다." });
     res.json(draft);
+  });
+  app.delete("/api/plan/intake", (req, res) => {
+    if (
+      store
+        .list(req.dataset, "planning-job")
+        .some((j) => j.status === "running")
+    )
+      return res
+        .status(409)
+        .json({ error: "계획 생성이 끝난 뒤 상담을 삭제해주세요." });
+    store.transaction(() => {
+      store.remove(req.dataset, "planning", "intake");
+      for (const d of store.list(req.dataset, "plan-draft"))
+        if (!d.applied) store.remove(req.dataset, "plan-draft", d.id);
+      for (const j of store.list(req.dataset, "planning-job"))
+        store.remove(req.dataset, "planning-job", j.id);
+    });
+    res.json({ ok: true });
+  });
+  app.post("/api/plan/generate", async (req, res) => {
+    const { answers, feedback } = z
+      .object({
+        answers: z.unknown(),
+        feedback: z.string().max(2000).default(""),
+      })
+      .parse(req.body);
+    const plan = buildCoachedPlan(answers, today());
+    checkPlanningGoals(req.dataset, plan.profile);
+    if (plan.blockers.length)
+      return res.status(409).json({ error: plan.blockers.join(" ") });
+    if (coaching)
+      return res
+        .status(409)
+        .json({
+          error: "AI가 다른 답변을 작성 중입니다. 완료 후 다시 요청해주세요.",
+        });
+    // Acquire before awaiting authentication to prevent concurrent job creation.
+    coaching = true;
+    try {
+      if (!(await codex.status()).connected) {
+        coaching = false;
+        return res
+          .status(409)
+          .json({ error: "설정에서 AI 계정을 연결해주세요." });
+      }
+    } catch (e) {
+      coaching = false;
+      throw e;
+    }
+    const ds = req.dataset;
+    let job = store.put(ds, "planning-job", {
+      status: "running",
+      stage: "계획과 방법론 검토 중",
+      createdAt: new Date().toISOString(),
+    });
+    res.status(202).json(job);
+    const run = async () => {
+      try {
+        const history =
+          store.get(ds, "planning", "intake")?.discussion?.slice(-12) || [];
+        const first = await codex.coach(
+          planningAIPrompt,
+          {
+            trainingPolicy: planningContext(store, ds, plan),
+            feedback,
+            previousMessages: history,
+          },
+          config.codexModel || AI_MODEL,
+          null,
+          config.codexEffort || AI_EFFORT,
+        );
+        const proposal = validateAIProposal(
+          typeof first === "string" ? first : first.text,
+          plan.profile,
+          today(),
+        );
+        job = store.put(ds, "planning-job", {
+          ...job,
+          stage: "AI 제안의 강도·일정 재검토 중",
+        });
+        const second = await codex.coach(
+          planningAIPrompt +
+            " 첫 제안을 비판적으로 재검토하고 최종안을 반환하세요. 개선이 필요 없으면 동일한 변경을 유지하세요.",
+          {
+            trainingPolicy: proposal.plan,
+            originalPolicy: plan,
+            feedback,
+            firstReview: proposal.explanation,
+          },
+          config.codexModel || AI_MODEL,
+          null,
+          config.codexEffort || AI_EFFORT,
+        );
+        const final = validateAIProposal(
+          typeof second === "string" ? second : second.text,
+          proposal.answers,
+          today(),
+        );
+        job = store.put(ds, "planning-job", {
+          ...job,
+          stage: "최종 조건과 기존 일정 검증 중",
+        });
+        const draft = savePlanningDraft(ds, final.answers, {
+          aiReview: {
+            text: final.explanation,
+            firstReview: proposal.explanation,
+            feedback,
+            model: second.model || config.codexModel || AI_MODEL,
+            effort: second.effort || config.codexEffort || AI_EFFORT,
+          },
+        });
+        store.put(ds, "planning-job", {
+          ...job,
+          status: "ready",
+          stage: "생성 완료 · 검토 후 적용",
+          draftId: draft.id,
+          finishedAt: new Date().toISOString(),
+        });
+      } catch (e) {
+        store.put(ds, "planning-job", {
+          ...job,
+          status: "failed",
+          error: e.message || "AI 계획 생성에 실패했습니다.",
+          finishedAt: new Date().toISOString(),
+        });
+      } finally {
+        coaching = false;
+      }
+    };
+    void run();
   });
   app.post("/api/plan/coaching-apply", (req, res) => {
     const { id } = z.object({ id: z.string().min(1) }).parse(req.body);
@@ -338,6 +501,9 @@ export function createApp({
         appliedAt: new Date().toISOString(),
         sessionIds: saved.map((s) => s.id),
       });
+      for (const job of store.list(req.dataset, "planning-job"))
+        if (job.draftId === draft.id)
+          store.put(req.dataset, "planning-job", { ...job, status: "applied" });
       return saved;
     });
     res.status(201).json({ sessions });

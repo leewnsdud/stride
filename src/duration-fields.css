@@ -1,6 +1,10 @@
 .duration-control {
   min-width: 0;
 }
+.duration-minutes .duration-input,
+.duration-minutes .duration-wheels {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
 .duration-control .duration-input label > span {
   color: #62788e;
 }

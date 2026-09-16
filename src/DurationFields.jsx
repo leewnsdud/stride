@@ -96,7 +96,9 @@ export default function DurationFields({
   label,
   required = false,
   maxHours = 50,
+  showSeconds = true,
 }) {
+  const visibleUnits = showSeconds ? units : units.slice(0, 2);
   const total = value == null ? null : Math.round(Number(value));
   const [parts, setParts] = useState(() => split(total));
   const emitted = useRef(total);
@@ -121,7 +123,7 @@ export default function DurationFields({
   };
   return (
     <div
-      className="duration-control"
+      className={`duration-control${showSeconds ? "" : " duration-minutes"}`}
       role="group"
       aria-label={label}
       onKeyDown={(e) => {
@@ -133,7 +135,7 @@ export default function DurationFields({
       }}
     >
       <div className="duration-input">
-        {units.map((unit, i) => (
+        {visibleUnits.map((unit, i) => (
           <label key={unit}>
             <input
               aria-label={`${label} ${unit}`}
@@ -192,7 +194,7 @@ export default function DurationFields({
             </span>
           </div>
           <div className="duration-wheels">
-            {units.map((unit, i) => (
+            {visibleUnits.map((unit, i) => (
               <Wheel
                 key={unit}
                 label={unit}

@@ -1,4 +1,4 @@
-export const POLICY_VERSION = "2026-09-v6";
+export const POLICY_VERSION = "2026-09-v7";
 export const methodLabels = {
   subthreshold: "통제된 서브역치 · 단일 세션",
   foundation: "기초 지구력 우선",

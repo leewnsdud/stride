@@ -32,7 +32,7 @@ const questions = [
   ],
   [
     "일상에서 지킬 수 있는 요일과 시간은 어떻게 되나요?",
-    "0분은 쉬는 날입니다. 러닝에 쓸 수 있는 실제 시간만 적어주세요. 선택한 요일 안에서 롱런과 회복 간격을 확보하겠습니다.",
+    "러닝 가능한 요일과 주간 시간 상한을 선택하세요. 요일별 시간은 유연하게 배분하고 핵심 훈련 사이 회복 간격을 확보합니다.",
   ],
   [
     "어떤 지형과 보조 훈련을 활용할 수 있나요?",
@@ -134,7 +134,13 @@ export default function PlanCoach({
   busy,
   onApply,
   dataset,
+  onBackground,
+  onDiscard,
 }) {
+  const [useAI, setUseAI] = useState(false);
+  const [feedback, setFeedback] = useState("");
+  const [confirmDiscard, setConfirmDiscard] = useState(false);
+  const [aiConnected, setAIConnected] = useState(null);
   const [v, setV] = useState(null),
     [step, setStep] = useState(0),
     [baseline, setBaseline] = useState(null),
@@ -146,10 +152,24 @@ export default function PlanCoach({
     [discussion, setDiscussion] = useState([]),
     [loadAttempt, setLoadAttempt] = useState(0);
   useEffect(() => {
+    if (step !== 6) return;
+    let alive = true;
+    api("/integrations")
+      .then((r) => {
+        if (alive) setAIConnected(!!r.codex?.connected);
+      })
+      .catch(() => {
+        if (alive) setAIConnected(false);
+      });
+    return () => {
+      alive = false;
+    };
+  }, [step]);
+  useEffect(() => {
     let alive = true;
     setError("");
     api("/plan/intake")
-      .then(({ draft, baseline: b }) => {
+      .then(({ draft, baseline: b, previousBlock }) => {
         if (!alive) return;
         setBaseline(b);
         setDiscussion(draft?.discussion || []);
@@ -173,11 +193,11 @@ export default function PlanCoach({
           baselineElevation: b.baselineElevation,
           longestMinutes: b.longestMinutes,
           longestKm: b.longestKm,
-          consistency: "",
+          consistency: b.consistency ?? "",
           experience: "",
           qualityExperience: false,
           qualityDaysPerWeek: 1,
-          currentRunsPerWeek: "",
+          currentRunsPerWeek: b.currentRunsPerWeek ?? "",
           allowDoubles: false,
           qualityMinutesPerWeek: 15,
           walkingMinutes: "",
@@ -186,9 +206,11 @@ export default function PlanCoach({
           recentInjury: false,
           sleep: "",
           availability: [0, 45, 0, 45, 0, 30, 90],
+          availableDays: [1, 3, 5, 6],
           longDay: 6,
           weeklyLimit: b.baselineMinutes || 180,
           terrain: "",
+          terrains: [],
           descent: "new",
           strength: "none",
           fueling: "new",
@@ -215,10 +237,71 @@ export default function PlanCoach({
                 targetMinutes: goal.targetMinutes || "",
               }
             : saved
-              ? { ...initial, ...saved }
+              ? {
+                  ...initial,
+                  ...saved,
+                  availableDays:
+                    saved.availableDays ||
+                    saved.availability?.flatMap((n, i) =>
+                      Number(n) > 0 ? [i] : [],
+                    ) ||
+                    initial.availableDays,
+                  terrains:
+                    saved.terrains || (saved.terrain ? [saved.terrain] : []),
+                }
               : initial,
         );
         setStep(goal ? 0 : Math.min(draft?.step || 0, 5));
+        if (modal.continue && previousBlock) {
+          const nextDate = new Date(
+            `${previousBlock.weeks.at(-1).end}T12:00:00Z`,
+          );
+          nextDate.setUTCDate(nextDate.getUTCDate() + 1);
+          const start = nextDate.toISOString().slice(0, 10);
+          setV({
+            ...initial,
+            ...previousBlock.profile,
+            start: start > today ? start : today,
+            baselineMinutes: b.baselineMinutes,
+            baselineKm: b.baselineKm,
+            baselineElevation: b.baselineElevation,
+            longestMinutes: b.longestMinutes,
+            longestKm: b.longestKm,
+            currentRunsPerWeek: b.currentRunsPerWeek ?? "",
+            consistency: b.consistency ?? "",
+            baselineConfirmed: false,
+            recovery: "",
+            sleep: "",
+            availableDays:
+              previousBlock.profile.availableDays ||
+              previousBlock.profile.availability.flatMap((n, i) =>
+                n > 0 ? [i] : [],
+              ),
+            terrains: previousBlock.profile.terrains || [
+              previousBlock.profile.terrain,
+            ],
+          });
+          setStep(0);
+        }
+        if (modal.draftId) {
+          api(`/plan/drafts/${modal.draftId}`)
+            .then((plan) => {
+              if (!alive) return;
+              setV({
+                ...initial,
+                ...plan.profile,
+                availableDays:
+                  plan.profile.availableDays ||
+                  plan.profile.availability.flatMap((n, i) =>
+                    n > 0 ? [i] : [],
+                  ),
+                terrains: plan.profile.terrains || [plan.profile.terrain],
+              });
+              setPreview(plan);
+              setStep(6);
+            })
+            .catch((e) => alive && setError(e.message));
+        }
       })
       .catch((e) => {
         if (alive) setError(e.message);
@@ -231,6 +314,7 @@ export default function PlanCoach({
     setV((p) => ({
       ...p,
       [key]: value,
+      ...(key === "baselineMinutes" ? { weeklyLimit: value || 30 } : {}),
       ...(key === "experience" && value !== "experienced"
         ? { allowDoubles: false }
         : {}),
@@ -262,6 +346,22 @@ export default function PlanCoach({
         onChange={(e) => change(key, e.target.value)}
       />
     </Field>
+  );
+  const duration = (key, label) => (
+    <div className="planning-field">
+      <span>{label}</span>
+      <DurationFields
+        label={label}
+        maxHours={30}
+        showSeconds={false}
+        value={
+          v[key] === "" || v[key] == null
+            ? null
+            : Math.round(Number(v[key])) * 60
+        }
+        onChange={(seconds) => change(key, seconds == null ? 0 : seconds / 60)}
+      />
+    </div>
   );
   const selectGoal = (id, secondary = false) => {
     const g = goals.find((x) => x.id === id);
@@ -382,6 +482,18 @@ export default function PlanCoach({
                 "목표 완주 시간을 10분부터 83시간 20분 사이로 입력해주세요.",
               );
             }
+            if (
+              step === 3 &&
+              (!v.availableDays.includes(v.longDay) ||
+                v.availableDays.length < 2)
+            )
+              throw new Error(
+                "러닝 가능한 요일을 2일 이상 선택하고, 그중에서 롱런 요일을 선택해주세요.",
+              );
+            if (step === 3 && Number(v.weeklyLimit) < 30)
+              throw new Error("주간 러닝 시간 상한은 30분 이상이어야 합니다.");
+            if (step === 4 && !v.terrains.length)
+              throw new Error("접근 가능한 지형을 하나 이상 선택해주세요.");
             await save(Math.min(step + 1, 6));
             if (step === 5) await build();
             setStep(Math.min(step + 1, 6));
@@ -592,12 +704,7 @@ export default function PlanCoach({
               </div>
             </div>
             <div className="planning-fields">
-              {number(
-                "baselineMinutes",
-                "지속 가능한 주간 러닝 시간 (분)",
-                0,
-                1800,
-              )}
+              {duration("baselineMinutes", "지속 가능한 주간 러닝 시간")}
               {Number(v.baselineMinutes) === 0 &&
                 number(
                   "walkingMinutes",
@@ -616,15 +723,14 @@ export default function PlanCoach({
               )}
               {number("longestKm", "최근 30일 최장 활동 거리 (km)", 0, 150)}
               {number("baselineElevation", "최근 주간 상승 고도 (m)", 0, 15000)}
-              {v.experience === "experienced" &&
-                number(
-                  "currentRunsPerWeek",
-                  "최근 주당 러닝 횟수 (하루 2회 포함)",
-                  1,
-                  14,
-                  false,
-                  "하루 두 번 달리기를 허용할 때 현재 빈도의 상한으로 사용합니다.",
-                )}
+              {number(
+                "currentRunsPerWeek",
+                "최근 주당 러닝 횟수 (하루 2회 포함)",
+                1,
+                14,
+                false,
+                "하루 두 번 달리기를 허용할 때 현재 빈도의 상한으로 사용합니다.",
+              )}
               {number("consistency", "꾸준히 달려온 최근 연속 주수", 0, 104)}
               <Select
                 label="달리기 경험"
@@ -711,43 +817,43 @@ export default function PlanCoach({
         )}
         {step === 3 && (
           <>
-            <div className="planning-availability">
+            <fieldset className="planning-day-options">
+              <legend>러닝 가능한 요일</legend>
               {weekdays.map((d, i) => (
-                <Field key={d} label={`${d}요일 (분)`}>
+                <label key={d}>
                   <input
-                    type="number"
-                    min="0"
-                    max="600"
-                    step="5"
-                    required
-                    value={v.availability[i]}
+                    type="checkbox"
+                    checked={v.availableDays.includes(i)}
                     onChange={(e) =>
                       change(
-                        "availability",
-                        v.availability.map((n, j) =>
-                          i === j ? e.target.value : n,
-                        ),
+                        "availableDays",
+                        e.target.checked
+                          ? [...v.availableDays, i]
+                          : v.availableDays.filter((n) => n !== i),
                       )
                     }
                   />
-                </Field>
+                  <span>{d}</span>
+                </label>
               ))}
-            </div>
+            </fieldset>
             <div className="planning-fields">
-              <Select
-                label="롱런을 할 요일"
-                value={String(v.longDay)}
-                onChange={(x) => change("longDay", Number(x))}
-                options={weekdays.map((d, i) => [String(i), d + "요일"])}
-              />
-              {number(
-                "weeklyLimit",
-                "주간 러닝 시간 상한 (분)",
-                30,
-                1800,
-                true,
-                "근력 보조 시간은 별도로 표시합니다. 하루 상한도 함께 적용합니다.",
-              )}
+              <fieldset className="planning-day-options">
+                <legend>롱런을 할 요일</legend>
+                {weekdays.map((d, i) => (
+                  <label key={d}>
+                    <input
+                      type="radio"
+                      name="longDay"
+                      checked={v.longDay === i}
+                      disabled={!v.availableDays.includes(i)}
+                      onChange={() => change("longDay", i)}
+                    />
+                    <span>{d}</span>
+                  </label>
+                ))}
+              </fieldset>
+              {duration("weeklyLimit", "주간 러닝 시간 상한")}
               {v.experience === "experienced" && (
                 <label className="planning-check">
                   <input
@@ -769,16 +875,36 @@ export default function PlanCoach({
         )}
         {step === 4 && (
           <div className="planning-fields">
-            <Select
-              label="정기적으로 접근 가능한 지형"
-              value={v.terrain}
-              onChange={(x) => change("terrain", x)}
-              options={[
+            <fieldset className="planning-terrain-options">
+              <legend>정기적으로 접근 가능한 지형 · 여러 개 선택</legend>
+              {[
                 ["flat", "평지 / 트레드밀"],
                 ["hills", "언덕 접근 가능"],
                 ["trail", "실제 트레일 접근 가능"],
-              ]}
-            />
+              ].map(([key, text]) => (
+                <label className="planning-check" key={key}>
+                  <input
+                    type="checkbox"
+                    checked={v.terrains.includes(key)}
+                    onChange={(e) => {
+                      const terrains = e.target.checked
+                        ? [...v.terrains, key]
+                        : v.terrains.filter((n) => n !== key);
+                      change("terrains", terrains);
+                      change(
+                        "terrain",
+                        terrains.includes("trail")
+                          ? "trail"
+                          : terrains.includes("hills")
+                            ? "hills"
+                            : "flat",
+                      );
+                    }}
+                  />
+                  {text}
+                </label>
+              ))}
+            </fieldset>
             {v.mode !== "road" && (
               <Select
                 label="다운힐 경험"
@@ -851,6 +977,18 @@ export default function PlanCoach({
                   ...Object.entries(methodLabels),
                 ]}
               />
+              <div className="planning-principles">
+                {Object.entries(methodDescriptions).map(([key, text]) => (
+                  <p key={key}>
+                    <strong>{methodLabels[key]}: </strong>
+                    {text}
+                  </p>
+                ))}
+                <p>
+                  방법론 이름보다 현재 기반과 회복이 우선합니다. 더블 역치·연속
+                  장거리·중량 등반은 자동 배치하지 않습니다.
+                </p>
+              </div>
               {v.objective === "performance" && (
                 <>
                   {number(
@@ -878,18 +1016,6 @@ export default function PlanCoach({
                 </>
               )}
             </div>
-            <div className="planning-principles">
-              {Object.entries(methodDescriptions).map(([key, text]) => (
-                <p key={key}>
-                  <strong>{methodLabels[key]}: </strong>
-                  {text}
-                </p>
-              ))}
-              <p>
-                방법론 이름보다 현재 기반과 회복이 우선합니다. 더블 역치·연속
-                장거리·중량 등반은 자동 배치하지 않습니다.
-              </p>
-            </div>
           </>
         )}
         {step < 6 && (
@@ -916,6 +1042,27 @@ export default function PlanCoach({
       </form>
       {step === 6 && preview && (
         <div className="planning-review">
+          {preview.aiReview && (
+            <section className="planning-consult">
+              <h3>AI 검토 결과</h3>
+              <small>
+                {preview.aiReview.model} · {preview.aiReview.effort}
+              </small>
+              <Markdown>{preview.aiReview.text}</Markdown>
+            </section>
+          )}
+          {preview.continuity && (
+            <section className="planning-baseline">
+              <h3>이전 블록과 연결</h3>
+              <p>
+                {preview.continuity.start} — {preview.continuity.end} ·{" "}
+                {preview.continuity.planned}회 중 {preview.continuity.linked}회
+                기록 연결 · 실제{" "}
+                {formatMinutes(preview.continuity.actualMinutes)}
+              </p>
+              <p>{preview.continuity.note}</p>
+            </section>
+          )}
           <p className="helper">
             {methodLabels[preview.method]} · {preview.sessions.length}회 훈련 ·
             첫 주 {formatMinutes(preview.weeks[0]?.minutes ?? 0)}
@@ -958,8 +1105,30 @@ export default function PlanCoach({
               </ul>
             </details>
           )}
-          <details className="planning-cautions">
+          <details className="planning-cautions" open>
             <summary>대회까지의 훈련 방향</summary>
+            <p>
+              전체 {preview.totalWeeks || 4}주 흐름 안에서 다음 4주를 상세
+              배정합니다. 이후 블록은 최근 실제 훈련량·회복·기존 기록 연결을
+              확인한 뒤 이어서 만듭니다. 미래 훈련량을 미리 늘려 확정하지
+              않습니다.
+            </p>
+            {preview.cycle && (
+              <div className="planning-cycle">
+                {preview.cycle.map((w) => (
+                  <article key={w.start}>
+                    <small>
+                      {w.start} — {w.end}
+                    </small>
+                    <strong>{w.phase}</strong>
+                    <span>
+                      {w.status}
+                      {w.checkpoint ? " · 블록 점검" : ""}
+                    </span>
+                  </article>
+                ))}
+              </div>
+            )}
             <div className="planning-decisions">
               {preview.roadmap.map((r) => (
                 <article key={r.phase}>
@@ -992,8 +1161,8 @@ export default function PlanCoach({
             ))}
           </div>
           <div className="planning-sessions">
-            {preview.sessions.map((s) => (
-              <details key={s.date}>
+            {preview.sessions.map((s, index) => (
+              <details key={`${s.date}-${index}`}>
                 <summary>
                   <span>{s.date}</span>
                   <strong>{s.title}</strong>
@@ -1097,9 +1266,51 @@ export default function PlanCoach({
               checked={agreed}
               onChange={(e) => setAgreed(e.target.checked)}
             />
-            조건·경고·실제 시간을 검토했고 이 블록을 적용할게요
+            {useAI
+              ? "현재 조건과 경고를 확인했고 AI 검토를 시작할게요"
+              : "조건·경고·실제 시간을 검토했고 이 블록을 적용할게요"}
           </label>
+          <section className="planning-consult">
+            <label className="planning-check">
+              <input
+                type="checkbox"
+                checked={useAI}
+                disabled={!aiConnected}
+                onChange={(e) => setUseAI(e.target.checked)}
+              />
+              AI와 검토하며 계획 개선하기
+            </label>
+            {!aiConnected && (
+              <p className="helper">
+                {aiConnected === null
+                  ? "AI 연결 확인 중…"
+                  : "AI 옵션을 사용하려면 설정에서 계정을 연결해주세요. 기본 계획은 바로 적용할 수 있습니다."}
+              </p>
+            )}
+            <p className="helper">
+              연결된 AI 계정으로 두 차례 검토합니다. 생성 중에는 이 창이 닫히며
+              훈련 계획 탭에 진행 상태가 표시됩니다. 완료 후 변경된 계획을
+              확인하고 적용해주세요.
+            </p>
+            {useAI && (
+              <textarea
+                aria-label="AI 계획 개선 요청"
+                rows={3}
+                maxLength={2000}
+                value={feedback}
+                onChange={(e) => setFeedback(e.target.value)}
+                placeholder="계획에 반영하고 싶은 의견이나 우려를 적어주세요."
+              />
+            )}
+          </section>
           <div className="planning-actions">
+            <button
+              className="button"
+              disabled={pending || busy}
+              onClick={() => setConfirmDiscard(true)}
+            >
+              검토 내용 삭제
+            </button>
             <button
               className="button"
               disabled={pending || busy}
@@ -1121,12 +1332,64 @@ export default function PlanCoach({
                 !!preview.blockers.length ||
                 !preview.sessions.length
               }
-              onClick={() => onApply(preview.id)}
+              onClick={async () => {
+                if (!useAI) return onApply(preview.id);
+                setPending(true);
+                setError("");
+                try {
+                  await api("/plan/generate", { answers: v, feedback });
+                  onBackground();
+                } catch (e) {
+                  setError(e.message);
+                } finally {
+                  setPending(false);
+                }
+              }}
             >
               <Check />
-              {busy ? "적용 중…" : "검토한 계획 적용"}
+              {pending
+                ? "생성 요청 중…"
+                : busy
+                  ? "적용 중…"
+                  : useAI
+                    ? "AI 검토·생성 시작"
+                    : "검토한 계획 적용"}
             </button>
           </div>
+          {confirmDiscard && (
+            <section className="planning-cautions" role="alert">
+              <p>
+                상담 답변과 적용하지 않은 검토 내용을 삭제할까요? 이미 적용한
+                훈련은 유지됩니다.
+              </p>
+              <div className="planning-actions">
+                <button
+                  className="button"
+                  disabled={pending}
+                  onClick={() => setConfirmDiscard(false)}
+                >
+                  취소
+                </button>
+                <button
+                  className="button"
+                  disabled={pending}
+                  onClick={async () => {
+                    setPending(true);
+                    try {
+                      await api("/plan/intake", undefined, "DELETE");
+                      onDiscard();
+                    } catch (e) {
+                      setError(e.message);
+                    } finally {
+                      setPending(false);
+                    }
+                  }}
+                >
+                  삭제 확인
+                </button>
+              </div>
+            </section>
+          )}
         </div>
       )}
     </div>

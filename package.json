@@ -11,7 +11,7 @@
     "test:build": "node --test tests/build-loading.test.mjs",
     "test:garmin": ".venv/bin/python -m unittest discover -s tests -p 'test_garmin_bridge.py'",
     "start": "node server/index.mjs",
-    "test": "node --test tests/access.test.mjs tests/backup.test.mjs tests/api.test.mjs tests/coaching.test.mjs tests/codex.test.mjs tests/domain.test.mjs tests/http-client.test.mjs tests/markdown.test.mjs tests/metrics.test.mjs tests/period.test.mjs tests/search-selection.test.mjs tests/plan-progress.test.mjs tests/planning-api.test.mjs tests/pwa.test.mjs tests/time.test.mjs tests/training-policy.test.mjs tests/training-spectrum.test.mjs tests/ui-motion.test.mjs tests/workout-recipes.test.mjs",
+    "test": "node --test tests/access.test.mjs tests/backup.test.mjs tests/api.test.mjs tests/coaching.test.mjs tests/codex.test.mjs tests/domain.test.mjs tests/http-client.test.mjs tests/markdown.test.mjs tests/metrics.test.mjs tests/period.test.mjs tests/search-selection.test.mjs tests/plan-progress.test.mjs tests/planning-api.test.mjs tests/planning-generation.test.mjs tests/pwa.test.mjs tests/time.test.mjs tests/training-policy.test.mjs tests/training-spectrum.test.mjs tests/ui-motion.test.mjs tests/workout-recipes.test.mjs",
     "macos:install": "node scripts/install-macos.mjs",
     "macos:uninstall": "node scripts/install-macos.mjs --uninstall",
     "backup": "node scripts/backup.mjs",

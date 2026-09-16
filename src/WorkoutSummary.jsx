@@ -97,9 +97,10 @@ export default function WorkoutSummary({ session: s, onEdit }) {
       }).map(
         ([k, l]) =>
           w[k] && (
-            <p key={k}>
-              <b>{l}</b> {w[k]}
-            </p>
+            <div className="workout-detail-row" key={k}>
+              <strong>{l}</strong>
+              <p>{w[k]}</p>
+            </div>
           ),
       )}
       {s.type === "race" && w.race && (
@@ -132,7 +133,7 @@ export default function WorkoutSummary({ session: s, onEdit }) {
           )}
         </>
       )}
-      {s.notes && <p>{s.notes}</p>}
+      {s.notes && <p className="workout-summary-notes">{s.notes}</p>}
     </section>
   );
 }

@@ -1800,7 +1800,7 @@ h3,
   margin: 20px 0;
   padding: 18px;
   border-radius: 20px;
-  background: #f5f7f1;
+  background: #e3ebf3;
   min-width: 0;
 }
 .flow-heading {
@@ -1816,7 +1816,7 @@ h3,
 }
 .flow-heading small {
   font-size: 11px;
-  color: #72796a;
+  color: #586e84;
 }
 .workout-flow-list {
   list-style: none;
@@ -1832,19 +1832,19 @@ h3,
   background: #fff;
   border-radius: 14px;
   padding: 12px;
-  border-top: 3px solid #c0cf88;
+  border-top: 3px solid #90abc4;
 }
 .workout-flow-list .flow-repeat,
 .workout-flow-list .flow-sequence {
   flex-basis: 100%;
-  background: #edf0e5;
+  background: #d9e5ef;
 }
 .workout-flow-list .flow-recovery,
 .workout-flow-list .flow-cooldown {
   border-color: #bbd6e4;
 }
 .workout-flow-list .flow-warmup {
-  border-color: #ead9ae;
+  border-color: #aebfce;
 }
 .workout-flow-list li > div {
   display: flex;
@@ -1854,7 +1854,7 @@ h3,
 .workout-flow-list span,
 .workout-flow-list small {
   font-size: 11px;
-  color: #69725e;
+  color: #586e84;
 }
 .workout-flow-list strong {
   font-size: 13px;
@@ -2291,7 +2291,7 @@ h3,
 @media (max-width: 700px) {
   body :is(main, .modal) :is(
     input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
-    select:not(.review-perspective):not(.analysis-select),
+    select:not(.review-perspective):not(.analysis-select):not(.plan-coach select),
     textarea
   ) {
     font-size: 16px;

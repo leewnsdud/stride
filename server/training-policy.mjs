@@ -50,10 +50,22 @@ export const intakeSchema = z
     recovery: z.enum(["ready", "tired", "pain", "illness"]),
     recentInjury: z.boolean(),
     sleep: z.coerce.number().min(2).max(12),
-    availability: z.array(z.coerce.number().min(0).max(600)).length(7),
+    availability: z
+      .array(z.coerce.number().min(0).max(600))
+      .length(7)
+      .default([0, 45, 0, 45, 0, 30, 90]),
+    availableDays: z
+      .array(z.number().int().min(0).max(6))
+      .min(2)
+      .max(7)
+      .optional(),
     longDay: z.coerce.number().int().min(0).max(6),
     weeklyLimit: z.coerce.number().min(30).max(1800),
     terrain: z.enum(["flat", "hills", "trail"]),
+    terrains: z
+      .array(z.enum(["flat", "hills", "trail"]))
+      .min(1)
+      .optional(),
     descent: z.enum(["new", "some", "experienced"]),
     strength: z.enum(["none", "new", "regular"]),
     fueling: z.enum(["new", "practiced"]),
@@ -72,6 +84,23 @@ export const intakeSchema = z
     recentRaceDate: optionalDate,
     notes: z.string().max(1500).default(""),
   })
+  .transform((v) => ({
+    ...v,
+    // Day selection gives flexibility; capacity and the shared weekly budget
+    // still bound each generated session. Legacy per-day limits remain valid.
+    availability: v.availableDays
+      ? Array.from({ length: 7 }, (_, i) =>
+          v.availableDays.includes(i) ? 600 : 0,
+        )
+      : v.availability,
+    terrain: v.terrains
+      ? v.terrains.includes("trail")
+        ? "trail"
+        : v.terrains.includes("hills")
+          ? "hills"
+          : "flat"
+      : v.terrain,
+  }))
   .superRefine((v, c) => {
     if (v.currentRunsPerWeek != null && !Number.isInteger(v.currentRunsPerWeek))
       c.addIssue({
@@ -167,11 +196,19 @@ export function baselineFromActivities(activities, today) {
       km: Math.round(sum(runs.map((a) => Number(a.distance) || 0)) * 10) / 10,
       elevation: round(sum(runs.map((a) => Number(a.elevation) || 0))),
       days: new Set(runs.map((a) => a.date)).size,
+      runs: runs.length,
     };
   });
   const recent = activities.filter(
     (a) => a.date >= day(-30, today) && a.date < today,
   );
+  let consistency = 0;
+  for (let i = 1; i <= 104; i++) {
+    const start = day(-7 * i, end),
+      stop = day(7, start);
+    if (!activities.some((a) => a.date >= start && a.date < stop)) break;
+    consistency++;
+  }
   return {
     weeks,
     baselineMinutes: round(median(weeks.map((w) => w.minutes))),
@@ -180,7 +217,14 @@ export function baselineFromActivities(activities, today) {
     longestMinutes: round(
       Math.max(0, ...recent.map((a) => Number(a.duration) || 0)),
     ),
-    longestKm: Math.max(0, ...recent.map((a) => Number(a.distance) || 0)),
+    longestKm:
+      Math.round(
+        Math.max(0, ...recent.map((a) => Number(a.distance) || 0)) * 100,
+      ) / 100,
+    currentRunsPerWeek: recent.length
+      ? Math.min(14, Math.floor(median(weeks.map((w) => w.runs)))) || null
+      : null,
+    consistency: activities.length ? consistency : null,
     count: recent.length,
     asOf: today,
     explanation:

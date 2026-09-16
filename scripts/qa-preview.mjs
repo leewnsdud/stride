@@ -19,7 +19,19 @@ const instance = createApp({
         method: "chatgpt",
       }),
       models: async () => [{ id: "gpt-5.6-sol", reasoningEfforts: ["medium"] }],
-      coach: async () => {
+      coach: async (prompt) => {
+        if (prompt.includes("JSON만 반환")) {
+          await new Promise((resolve) => setTimeout(resolve, 3000));
+          return {
+            text: JSON.stringify({
+              explanation:
+                "QA 모의 검토: 현재 기반·회복과 주간 상한을 유지합니다.",
+              changes: {},
+            }),
+            model: "gpt-5.6-sol",
+            effort: "medium",
+          };
+        }
         if (process.env.QA_COACH_FAILURE === "1")
           await new Promise((resolve) => setTimeout(resolve, 4000));
         if (failCoach) {

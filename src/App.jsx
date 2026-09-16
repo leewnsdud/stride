@@ -280,6 +280,7 @@ function Modal({ title, onClose, children, wide = false, className = "" }) {
 export default function App() {
   useEffect(trackInputModality, []);
   const [coachTarget, setCoachTarget] = useState(null);
+  const [planningRevision, setPlanningRevision] = useState(0);
   const [page, setPage] = useState("overview"),
     [mode, setMode] = useState("live"),
     [data, setData] = useState(null),
@@ -1384,7 +1385,15 @@ export default function App() {
               )}
               {page === "goals" && (
                 <TrainingPlans
-                  key={mode}
+                  key={`${mode}-${planningRevision}`}
+                  api={api}
+                  hasAppliedPlan={data.hasAppliedPlan}
+                  onReview={(draftId) =>
+                    setModal({ kind: "generate", draftId })
+                  }
+                  onContinue={() =>
+                    setModal({ kind: "generate", continue: true })
+                  }
                   sessions={sessions}
                   activities={activities}
                   goals={goals}
@@ -1537,6 +1546,12 @@ export default function App() {
                 today={data.today}
                 busy={busy}
                 api={api}
+                onBackground={() => {
+                  setPlanningRevision((n) => n + 1);
+                  setModal(null);
+                  setPage("goals");
+                }}
+                onDiscard={() => setModal(null)}
                 onApply={(id) =>
                   act(
                     () => api("/plan/coaching-apply", { id }),
@@ -1580,7 +1595,11 @@ export default function App() {
                 key={`${mode}-${modal.item.id}`}
                 onConversationChange={refresh}
                 onOpenCoach={(conversation) => {
-                  setCoachTarget({ id: conversation.id, archived: !!conversation.archived, nonce: Date.now() });
+                  setCoachTarget({
+                    id: conversation.id,
+                    archived: !!conversation.archived,
+                    nonce: Date.now(),
+                  });
                   setModal(null);
                   go("coach");
                 }}
@@ -2056,7 +2075,13 @@ function ActivityDetail({
       </div>
       {!detail && <p className="helper">상세 데이터를 불러오는 중…</p>}
       <FeatureBoundary label="AI 리뷰">
-        <ActivityReview item={item} api={api} ready={!!detail} onConversationChange={onConversationChange} onOpenCoach={onOpenCoach} />
+        <ActivityReview
+          item={item}
+          api={api}
+          ready={!!detail}
+          onConversationChange={onConversationChange}
+          onOpenCoach={onOpenCoach}
+        />
       </FeatureBoundary>
       {detail && (
         <FeatureBoundary label="상세 분석">
