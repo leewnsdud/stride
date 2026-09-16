@@ -8,6 +8,7 @@ import {
 } from "./icons.jsx";
 import Markdown from "./Markdown.mjs";
 import WorkoutSummary from "./WorkoutSummary.jsx";
+import DurationFields from "./DurationFields.jsx";
 import { formatMinutes } from "../shared/time.mjs";
 import {
   methodLabels,
@@ -69,6 +70,60 @@ function Select({ label, value, onChange, options }) {
         ))}
       </select>
     </Field>
+  );
+}
+const raceDistances = [
+  ["5", "5km"],
+  ["10", "10km"],
+  ["21.0975", "하프마라톤 · 21.0975km"],
+  ["42.195", "풀마라톤 · 42.195km"],
+];
+function RaceDistance({ value, onChange, required, readOnly }) {
+  const preset = raceDistances.find(([n]) => Number(n) === Number(value))?.[0];
+  const [custom, setCustom] = useState(
+    value !== "" && value != null && !preset,
+  );
+  return (
+    <div className="planning-field">
+      <label>
+        목표 거리
+        <select
+          aria-label="목표 거리"
+          disabled={readOnly}
+          required={required}
+          value={custom ? "custom" : preset || ""}
+          onChange={(e) => {
+            const next = e.target.value;
+            setCustom(next === "custom");
+            if (next !== "custom") onChange(next);
+          }}
+        >
+          <option value="">선택해주세요</option>
+          {raceDistances.map(([n, text]) => (
+            <option key={n} value={n}>
+              {text}
+            </option>
+          ))}
+          <option value="custom">직접 입력</option>
+        </select>
+      </label>
+      {custom && (
+        <label>
+          직접 입력 (km)
+          <input
+            aria-label="목표 거리 직접 입력 (km)"
+            type="number"
+            min="1"
+            max="300"
+            step="any"
+            required={required}
+            readOnly={readOnly}
+            value={value ?? ""}
+            onChange={(e) => onChange(e.target.value)}
+          />
+        </label>
+      )}
+    </div>
   );
 }
 export default function PlanCoach({
@@ -316,6 +371,17 @@ export default function PlanCoach({
           setPending(true);
           setError("");
           try {
+            if (
+              step === 0 &&
+              v.objective === "performance" &&
+              (!v.targetMinutes ||
+                Number(v.targetMinutes) < 10 ||
+                Number(v.targetMinutes) > 5000)
+            ) {
+              throw new Error(
+                "목표 완주 시간을 10분부터 83시간 20분 사이로 입력해주세요.",
+              );
+            }
             await save(Math.min(step + 1, 6));
             if (step === 5) await build();
             setStep(Math.min(step + 1, 6));
@@ -422,24 +488,44 @@ export default function PlanCoach({
                 onChange={(e) => change("raceDate", e.target.value)}
               />
             </Field>
-            {number(
-              "raceDistance",
-              "목표 거리 (km)",
-              1,
-              300,
-              v.objective !== "base",
-            )}
+            <RaceDistance
+              key={`${v.goalId || "manual"}-${primary}`}
+              value={v.raceDistance}
+              onChange={(n) => change("raceDistance", n)}
+              required={v.objective !== "base"}
+              readOnly={!!v.goalId}
+            />
             {primary === "trail" &&
               number("raceElevation", "목표 상승 고도 (m)", 0, 30000, false)}
-            {v.objective === "performance" &&
-              number(
-                "targetMinutes",
-                "목표 완주 시간 (분)",
-                10,
-                5000,
-                true,
-                "희망 기록이며 현재 훈련 페이스로 강제하지 않습니다.",
-              )}
+            {v.objective === "performance" && (
+              <div className="planning-field">
+                <span>목표 완주 시간 · 시:분:초</span>
+                <fieldset
+                  disabled={!!v.goalId}
+                  style={{ border: 0, padding: 0, margin: 0, minWidth: 0 }}
+                >
+                  <DurationFields
+                    label="목표 완주 시간"
+                    maxHours={83}
+                    value={
+                      v.targetMinutes === "" || v.targetMinutes == null
+                        ? null
+                        : Number(v.targetMinutes) * 60
+                    }
+                    onChange={(seconds) =>
+                      change(
+                        "targetMinutes",
+                        seconds == null ? "" : seconds / 60,
+                      )
+                    }
+                  />
+                </fieldset>
+                <small>
+                  10분부터 83시간 20분까지 입력하세요. 희망 기록이며 현재 훈련
+                  페이스로 강제하지 않습니다.
+                </small>
+              </div>
+            )}
             {v.mode === "hybrid" && (
               <>
                 <Field label="연결할 보조목표">
