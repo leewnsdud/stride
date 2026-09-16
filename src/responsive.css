@@ -768,11 +768,40 @@ body {
 }
 .app .completed-plan {
   padding: clamp(16px, 3vw, 24px);
-  color: #273f55;
+  color: #283a4c;
+  font-family: inherit;
+}
+.app .completed-plan :is(h2, h3, strong, b, dt, dd) {
+  font-family: inherit;
+}
+.app .workout-summary-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.app .workout-summary-header > div {
+  min-width: 0;
+}
+.app .workout-summary-header .button {
+  flex-shrink: 0;
+}
+.app .workout-summary-header small {
+  color: #60758a;
+  font-size: var(--type-meta);
 }
 .app .completed-plan h2 {
   font-size: var(--type-section);
+  font-weight: 400;
+  letter-spacing: -0.025em;
   line-height: 1.4;
+  margin: 6px 0 0;
+  overflow-wrap: anywhere;
+}
+.app .completed-plan .workout-summary-date {
+  font-size: var(--type-meta);
+  color: #60758a;
+  margin: 10px 0 0;
 }
 .app .completed-plan > p {
   font-size: var(--type-body);
@@ -781,12 +810,12 @@ body {
 }
 .app .completed-plan .plan-summary {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   padding: 16px;
   background: #e3ecf4;
   border-radius: 16px;
-  margin: 20px 0;
+  margin: 20px 0 8px;
 }
 .app .completed-plan .plan-summary span {
   display: flex;
@@ -807,21 +836,48 @@ body {
   grid-template-columns: 76px minmax(0, 1fr);
   gap: 16px;
   padding: 14px 0;
-  border-bottom: 1px solid #d5e0eb;
   font-size: var(--type-body);
   line-height: 1.75;
 }
-.app .workout-detail-row strong {
+.app .workout-detail-row dt {
   color: #526f8d;
   font-size: 13px;
   font-weight: 500;
 }
-.app .workout-detail-row p {
+.app .workout-detail-row dd {
+  margin: 0;
+  min-width: 0;
+  font-size: inherit;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.app .workout-detail-list {
   margin: 0;
 }
-.app .workout-summary-notes {
-  white-space: pre-line;
+.app .workout-detail-list:empty {
+  display: none;
+}
+.app .completed-plan .workout-amount-note {
+  font-size: var(--type-meta);
   color: #60758a;
+  margin: 0 0 16px;
+}
+.app .completed-plan b {
+  color: #526f8d;
+}
+.app .workout-race-section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #d5e0eb;
+}
+.app .workout-race-section h3 {
+  font-size: var(--type-body);
+  font-weight: 500;
+  margin: 0 0 8px;
+  color: #283a4c;
+}
+.app .completed-activity-heading {
+  border-color: #d5e0eb;
 }
 .app .completed-plan .workout-flow b {
   color: #3d6081;
@@ -833,13 +889,6 @@ body {
   margin: 20px 0;
 }
 @media (max-width: 400px) {
-  .app .completed-plan .plan-summary {
-    grid-template-columns: 1fr;
-  }
-  .app .completed-plan .plan-summary span {
-    flex-direction: row;
-    justify-content: space-between;
-  }
   .app .workout-detail-row {
     grid-template-columns: 1fr;
     gap: 4px;
