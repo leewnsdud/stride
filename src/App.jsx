@@ -770,17 +770,17 @@ export default function App() {
                           <BarChart data={overview.days} maxBarSize={20}>
                             <CartesianGrid
                               vertical={false}
-                              stroke="#ededE8"
+                              stroke="#e7ebee"
                               strokeDasharray="3 4"
                             />
                             <XAxis
                               dataKey="label"
                               axisLine={false}
                               tickLine={false}
-                              tick={{ fontSize: 10, fill: "#93948c" }}
+                              tick={{ fontSize: 10, fill: "#7e90a2" }}
                             />
                             <Tooltip
-                              cursor={{ fill: "#f4f4ef" }}
+                              cursor={{ fill: "#eff2f4" }}
                               formatter={(v) => [`${num(v)} km`, "실제 거리"]}
                             />
                             <Bar
@@ -1252,7 +1252,7 @@ export default function App() {
                         barGap={range === "month" ? 0 : 5}
                         barCategoryGap={range === "month" ? "15%" : "10%"}
                       >
-                        <CartesianGrid vertical={false} stroke="#eeeee8" />
+                        <CartesianGrid vertical={false} stroke="#e8ebee" />
                         <XAxis
                           dataKey="label"
                           ticks={chartTicks}

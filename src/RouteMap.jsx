@@ -70,9 +70,9 @@ export default function RouteMap({ points, hover, demo }) {
         .setLngLat(position(p))
         .addTo(map);
     };
-    marker(route[0], "출발", "#6b8250");
+    marker(route[0], "출발", "#506982");
     marker(route.at(-1), "도착", "#b47552");
-    cursor.current = marker(route[0], "차트에서 선택한 위치", "#344230");
+    cursor.current = marker(route[0], "차트에서 선택한 위치", "#303942");
     cursor.current.getElement().style.visibility = "hidden";
     map.on("load", () => {
       // Keep roads and place names, omit points of interest and building detail.

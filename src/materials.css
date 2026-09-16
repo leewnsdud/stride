@@ -53,7 +53,7 @@ body { background:linear-gradient(150deg,#c2cfdb 0%,#d5dfe8 42%,#e7edf3 100%); b
 .text-button,.helper,.muted,.analysis-stats small,.field > span,.workout-field > span { color:#58697a; }
 .next-icon,.activity-icon,.coach-avatar,.avatar { background:#e5edf5; color:#4d6781; }
 .training-plan-session { background:#edf2f7; }
-.training-plan-session.is-complete { background:#e8f1eb; }
+.training-plan-session.is-complete { background:#e8ecf1; }
 .training-plan-overview progress { accent-color:#6985a1; }
 .training-plan-overview progress { appearance:none; -webkit-appearance:none; border:0; border-radius:999px; background:#dce5ed; overflow:hidden; }
 .training-plan-overview progress::-webkit-progress-bar { background:#dce5ed; border-radius:999px; }
@@ -221,7 +221,7 @@ input:focus,select:focus,textarea:focus { outline-color:#6c8ba9; }
 .settings-actions .button { flex-shrink:0; margin:0; min-height:44px; padding:10px 16px; font-size:13px; }
 .settings-card .settings-caption { font-size:12px; line-height:1.7; color:var(--muted); margin:14px 0 0; }
 .settings-actions .settings-caption { margin:0; }
-.settings-status { display:inline-flex; align-items:center; justify-content:center; white-space:nowrap; gap:6px; min-height:28px; padding:4px 10px; box-sizing:border-box; background:#e4ef96; color:#405426; border-radius:999px; font-size:10px; line-height:20px; font-weight:500; }
+.settings-status { display:inline-flex; align-items:center; justify-content:center; white-space:nowrap; gap:6px; min-height:28px; padding:4px 10px; box-sizing:border-box; background:#b2c2d3; color:#2c3d4e; border-radius:999px; font-size:10px; line-height:20px; font-weight:500; }
 .settings-status svg { width:12px; height:12px; }
 .settings-status-button { display:flex; align-items:center; min-height:44px; padding:0; background:transparent; border:0; flex-shrink:0; cursor:pointer; }
 .settings-meta { flex-shrink:0; color:var(--muted); font-size:11px; }

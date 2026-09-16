@@ -84,7 +84,7 @@ export default function ActivityMetricChart({
           }}
           onMouseLeave={() => onHover?.(null)}
         >
-          <CartesianGrid vertical={false} stroke="#e3e7e5" />
+          <CartesianGrid vertical={false} stroke="#e1e5e9" />
           <XAxis
             dataKey="x"
             type="number"

@@ -13,19 +13,19 @@ const number = (v, d = 1) =>
 const pace = formatPace;
 const duration = formatDuration;
 const metrics = [
-  ["pace", "페이스", "분/km", "#76895a"],
+  ["pace", "페이스", "분/km", "#5a7189"],
   ["hr", "심박", "bpm", "#b77760"],
-  ["altitude", "고도", "m", "#8d997a"],
+  ["altitude", "고도", "m", "#77899c"],
   ["cadence", "케이던스", "spm", "#8a7a99"],
   ["power", "러닝 파워", "W", "#b38c43"],
   ["gap", "경사 보정 페이스", "분/km", "#657b8d"],
-  ["strideLength", "보폭", "cm", "#7c948a"],
+  ["strideLength", "보폭", "cm", "#75889b"],
   ["groundContactTime", "지면 접촉 시간", "ms", "#aa8277"],
   ["verticalOscillation", "수직 진폭", "cm", "#8b86ac"],
   ["verticalRatio", "수직 비율", "%", "#78959b"],
   ["balance", "왼쪽 접촉 균형", "%", "#9e8e6f"],
   ["respiration", "호흡수", "회/분", "#839aaa"],
-  ["stamina", "스태미나", "%", "#7a966e"],
+  ["stamina", "스태미나", "%", "#6e8296"],
   ["performance", "퍼포먼스 컨디션", "", "#927e8e"],
   ["temperature", "기기 온도", "°C", "#b09075"],
 ];
@@ -344,7 +344,7 @@ export default function ActivityAnalysis({ item, detail, linked, onRefresh }) {
           metric="altitude"
           title="고도"
           unit="m"
-          color="#81976d"
+          color="#6d8297"
           axis={axis}
           onHover={setHover}
           forceHours={item.duration >= 60}

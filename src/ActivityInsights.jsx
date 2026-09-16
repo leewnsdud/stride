@@ -22,7 +22,7 @@ export default function ActivityInsights({
     .filter((l) => valid(l.pace) && l.pace > 0)
     .map((l) => ({ ...l, name: `랩 ${l.index}` }));
   const effects = [
-    { name: "유산소", value: stats.aerobicEffect, color: "#547b46" },
+    { name: "유산소", value: stats.aerobicEffect, color: "#46607b" },
     { name: "무산소", value: stats.anaerobicEffect, color: "#b78959" },
   ].filter((x) => valid(x.value) && x.value <= 5);
   if (!(showLaps && paced.length) && !effects.length) return null;
@@ -132,7 +132,7 @@ export default function ActivityInsights({
                     tick={{ fontSize: 11 }}
                   />
                   <Tooltip
-                    cursor={{ fill: "#eef0ee" }}
+                    cursor={{ fill: "#eceff2" }}
                     content={({ active, payload }) => {
                       const l = payload?.[0]?.payload;
                       return active && l ? (
@@ -162,7 +162,7 @@ export default function ActivityInsights({
                         fill={
                           l.label === "recovery" || l.label === "rest"
                             ? "#c6ccd0"
-                            : "#81a777"
+                            : "#778fa7"
                         }
                       />
                     ))}

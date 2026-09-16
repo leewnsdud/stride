@@ -9,16 +9,16 @@
    light geometric type and dot-matrix display numerals. */
 :root {
   font-family: "Manrope", "Noto Sans KR", sans-serif;
-  color: #252827;
-  background: #e9ebea;
-  --ink: #252827;
-  --muted: #6f7671;
-  --line: #dfe2df;
-  --green: #deee95;
+  color: #20262d;
+  background: #e7eaed;
+  --ink: #20262d;
+  --muted: #607285;
+  --line: #dce0e5;
+  --green: #b0c2d3;
   font-size: 14px;
 }
 body {
-  background: #e9ebea;
+  background: #e7eaed;
   -webkit-font-smoothing: antialiased;
 }
 .sidebar {
@@ -45,15 +45,15 @@ nav button,
   border: 0;
   border-radius: 28px;
   min-height: 46px;
-  color: #626964;
+  color: #556676;
   padding: 12px 16px;
   font-size: 13px;
 }
 nav button.active {
   background: #fff;
-  color: #202723;
+  color: #1e2329;
   font-weight: 500;
-  box-shadow: 0 3px 16px #14221c05;
+  box-shadow: 0 3px 16px #141b2205;
 }
 nav button:hover,
 .settings-nav:hover {
@@ -61,7 +61,7 @@ nav button:hover,
 }
 .motto,
 .nav-label {
-  color: #6d766f;
+  color: #5f7184;
 }
 main {
   margin-left: 224px;
@@ -91,10 +91,10 @@ main {
 }
 .page-heading p {
   font-size: 13px;
-  color: #6f7671;
+  color: #607285;
 }
 .eyebrow {
-  color: #6e7871;
+  color: #617385;
   font-size: 9px;
   letter-spacing: 1.6px;
 }
@@ -109,26 +109,26 @@ main {
   background: #ffffffcc;
   border-radius: 24px;
   min-height: 40px;
-  color: #343d36;
+  color: #2f3842;
   font-size: 12px;
 }
 .button.primary {
-  background: #e0f581;
+  background: #a8bbce;
   border: 0;
-  color: #253123;
+  color: #232a31;
 }
 .button.primary:hover {
-  background: #d4ed67;
+  background: #92aac2;
 }
 .tag {
-  background: #f0f2ee;
-  color: #56634f;
+  background: #eef0f2;
+  color: #4b5967;
   font-size: 10px;
 }
 .tag.light,
 .tag.green {
-  background: #e4f096;
-  color: #36442a;
+  background: #b2c3d4;
+  color: #2a3744;
   letter-spacing: 0;
   font-size: 10px;
 }
@@ -136,7 +136,7 @@ main {
   padding: 6px 14px;
 }
 .mode-button span {
-  color: #536047;
+  color: #465361;
 }
 .breadcrumb {
   font-size: 12px;
@@ -164,7 +164,7 @@ h3 {
   display: none;
 }
 .text-button {
-  color: #4e5c50;
+  color: #475563;
   font-size: 12px;
 }
 .overview-grid {
@@ -180,9 +180,9 @@ h3 {
   overflow: hidden;
 }
 .weekly-card {
-  background-color: #bad3a4;
+  background-color: #a9bbce;
   background-image: url("/images/insight-field.png");
-  color: #18351f;
+  color: #1c2631;
 }
 .distance-card {
   background-color: #e2d6bc;
@@ -213,7 +213,7 @@ h3 {
   font-size: 58px;
   line-height: 1;
   letter-spacing: 0;
-  color: #12301a;
+  color: #18212a;
 }
 .score-display strong small {
   font-family: "Manrope", sans-serif;
@@ -223,7 +223,7 @@ h3 {
 }
 .score-display > span {
   font-size: 12px;
-  color: #183b20;
+  color: #1e2935;
 }
 .score-display progress {
   appearance: none;
@@ -237,7 +237,7 @@ h3 {
   background: #ffffff77;
 }
 .score-display progress::-webkit-progress-value {
-  background: #284e2d;
+  background: #2a3b4c;
 }
 .weekly-bottom {
   padding-top: 14px;
@@ -245,12 +245,12 @@ h3 {
 }
 .weekly-bottom strong {
   font-size: 23px;
-  color: #f7fff4;
+  color: #f8fafb;
   font-weight: 500;
 }
 .weekly-bottom span,
 .weekly-bottom strong small {
-  color: #eef8e8;
+  color: #ecf0f4;
   font-size: 11px;
 }
 .big-stat {
@@ -293,7 +293,7 @@ h3 {
   font-family: "Manrope", "Noto Sans KR", sans-serif;
   font-variation-settings: normal;
   font-weight: 400;
-  color: #717a73;
+  color: #637688;
   letter-spacing: 0;
 }
 .button,
@@ -307,7 +307,7 @@ h3 {
 .metric-card p,
 .coach-card p,
 .next-body p {
-  color: #67716a;
+  color: #5b6c7d;
   font-size: 12px;
 }
 .metric-card .row span {
@@ -319,8 +319,8 @@ h3 {
 .next-icon,
 .activity-icon,
 .avatar {
-  background: #f0f3ee;
-  color: #485744;
+  background: #eef0f3;
+  color: #414e5a;
   border-radius: 50%;
 }
 .middle-grid,
@@ -363,7 +363,7 @@ h3 {
 }
 .activity-name small {
   font-size: 11px;
-  color: #717a73;
+  color: #637688;
 }
 .activity-number {
   font-size: 21px;
@@ -373,7 +373,7 @@ h3 {
   font-size: 12px;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
-  color: #5c695e;
+  color: #536272;
 }
 .calendar {
   border: 0;
@@ -432,32 +432,32 @@ h3 {
 input,
 select,
 textarea {
-  border: 1px solid #dce2dc;
+  border: 1px solid #dadfe4;
   border-radius: 12px;
   background: #fff;
   min-width: 0;
   max-width: 100%;
-  color: #27352a;
+  color: #272e35;
 }
 input:focus,
 select:focus,
 textarea:focus {
-  outline: 2px solid #718767;
+  outline: 2px solid #64778a;
   outline-offset: 2px;
 }
 .field > span,
 .workout-field > span {
-  color: #52614f;
+  color: #4a5866;
   font-size: 12px;
   line-height: 1.6;
 }
 .helper {
-  color: #6b756c;
+  color: #5e7082;
   font-size: 12px;
   line-height: 1.7;
 }
 .modal {
-  background: #eef0ee;
+  background: #eceff2;
   border: 1px solid #fff;
   border-radius: 28px;
   padding: 26px;
@@ -471,7 +471,7 @@ textarea:focus {
   top: -26px;
   padding: 16px 0;
   margin-top: -10px;
-  background: #eef0ee;
+  background: #eceff2;
   z-index: 5;
   gap: 16px;
 }
@@ -508,7 +508,7 @@ textarea:focus {
   overflow-wrap: anywhere;
 }
 .analysis-stats small {
-  color: #69736a;
+  color: #5c6e80;
   font-size: 12px;
 }
 .analysis-stats em {
@@ -522,7 +522,7 @@ textarea:focus {
   font-weight: 400;
 }
 .analysis-heading small {
-  color: #63715e;
+  color: #576778;
 }
 .analysis-table-wrap,
 .lap-chart-scroll {
@@ -539,13 +539,13 @@ textarea:focus {
 }
 .metric-tabs button {
   border-radius: 22px;
-  background: #f0f3ed;
+  background: #edf0f3;
   padding: 9px 12px;
   font-size: 12px;
 }
 .metric-tabs button[aria-pressed="true"] {
-  background: #dfed9f;
-  color: #2d3b29;
+  background: #b6c6d6;
+  color: #29323b;
 }
 .metric-tabs button:disabled {
   cursor: default;
@@ -596,7 +596,7 @@ textarea:focus {
 .insight-track {
   margin-top: 8px;
   height: 8px;
-  background: #e8ece6;
+  background: #e5e9ed;
   border-radius: 8px;
   overflow: hidden;
 }
@@ -612,22 +612,22 @@ textarea:focus {
   display: flex;
   justify-content: space-between;
   font-size: 10px;
-  color: #7a827a;
+  color: #6a7e92;
   margin-top: 5px;
 }
 .insight-tooltip {
   display: grid;
   gap: 5px;
   background: #fff;
-  border: 1px solid #dce3d9;
-  box-shadow: 0 5px 25px #1d301416;
+  border: 1px solid #d9dee3;
+  box-shadow: 0 5px 25px #18222c16;
   border-radius: 14px;
   padding: 14px;
   font-size: 12px;
 }
 .workout-step {
-  background: #f7f9f5;
-  border-color: #dfe6db;
+  background: #f5f7f9;
+  border-color: #dbe0e6;
   border-radius: 16px;
   min-width: 0;
 }
@@ -667,7 +667,7 @@ textarea:focus {
 }
 button:focus-visible,
 a:focus-visible {
-  outline: 2px solid #486b37;
+  outline: 2px solid #3a5168;
   outline-offset: 3px;
 }
 @media (max-width: 1200px) {
@@ -874,16 +874,16 @@ a:focus-visible {
     width: 100%;
   }
   .mobile-nav {
-    background: #f9fbf5f5;
+    background: #f6f8faf5;
     backdrop-filter: blur(16px);
     padding-bottom: env(safe-area-inset-bottom);
   }
   .mobile-nav button {
     min-height: 56px;
-    color: #59664f;
+    color: #4c5a69;
   }
   .mobile-nav button.active {
-    color: #23341e;
+    color: #1e2934;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -904,10 +904,10 @@ a:focus-visible {
     width: 100%;
     height: auto;
     padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
-    background: #f9fbf5f5;
+    background: #f6f8faf5;
     backdrop-filter: blur(16px);
     z-index: 20;
-    border-top: 1px solid #dfe5da;
+    border-top: 1px solid #dae0e5;
   }
   .sidebar .brand,
   .sidebar .workspace,
@@ -940,7 +940,7 @@ a:focus-visible {
     display: none;
   }
   .sidebar nav button.active {
-    background: #e6f0c1;
+    background: #ced8e3;
   }
   .heading-actions .button {
     font-size: 12px;
@@ -992,7 +992,7 @@ h3,
 .review-date,
 .chat-header small,
 .detail-heading p {
-  color: #70796f;
+  color: #617487;
 }
 @media (max-width: 700px) {
   .page-heading p {
@@ -1089,11 +1089,11 @@ h3,
   border-radius: 20px;
   padding: 9px 14px;
   background: transparent;
-  color: #626c65;
+  color: #576777;
 }
 .conversation-tabs button[aria-pressed="true"] {
-  background: #e5edce;
-  color: #263425;
+  background: #d4dee7;
+  color: #252c34;
 }
 .conversation-list {
   display: grid;
@@ -1110,12 +1110,12 @@ h3,
   border-radius: 14px;
   background: transparent;
   padding: 12px;
-  color: #465248;
+  color: #404c58;
   min-width: 0;
 }
 .conversation-list > button[aria-current="true"] {
   background: #fff;
-  color: #202a22;
+  color: #1f252b;
 }
 .conversation-list > button > svg {
   flex-shrink: 0;
@@ -1134,14 +1134,14 @@ h3,
 .conversation-list small {
   display: block;
   font-size: 10px;
-  color: #737b74;
+  color: #64778a;
   margin-top: 5px;
 }
 .coach-data-note {
   margin-top: 20px;
-  border-top: 1px solid #e0e5df;
+  border-top: 1px solid #dde2e7;
   padding-top: 16px;
-  color: #627065;
+  color: #58697a;
   font-size: 12px;
   line-height: 1.8;
 }
@@ -1205,7 +1205,7 @@ h3,
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #657165;
+  color: #5a6b7c;
   padding: 16px 0;
 }
 @media (max-width: 1100px) {
@@ -1237,16 +1237,16 @@ h3,
 .session-chat .message {
   font-size: 14px;
   line-height: 1.85;
-  background: #f4f6f2;
+  background: #f2f4f6;
   border-radius: 18px;
 }
 .session-chat .message.user {
-  background: #e7efcf;
+  background: #d6dfe8;
 }
 .session-chat .message-label {
   font-size: 10px;
   letter-spacing: 0.5px;
-  color: #5f7058;
+  color: #546474;
 }
 .session-chat .chat-note {
   font-size: 11px;
@@ -1258,7 +1258,7 @@ h3,
   line-height: 1.85;
   overflow-wrap: anywhere;
   min-width: 0;
-  color: #303b32;
+  color: #2d353e;
 }
 .markdown-content :is(p, ul, ol, blockquote, pre, table) {
   margin: 0 0 14px;
@@ -1301,13 +1301,13 @@ h3,
   margin: 6px 0;
 }
 .markdown-content blockquote {
-  border-left: 3px solid #a8bd82;
+  border-left: 3px solid #859fba;
   padding: 8px 16px;
-  background: #eaf0e3;
+  background: #e3eaf0;
   border-radius: 0 10px 10px 0;
 }
 .markdown-content a {
-  color: #386326;
+  color: #314458;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -1315,14 +1315,14 @@ h3,
   font-family: ui-monospace, monospace;
   font-size: 0.9em;
   padding: 2px 5px;
-  background: #e5eae1;
+  background: #e1e5ea;
   border-radius: 5px;
 }
 .markdown-content pre {
   overflow-x: auto;
   padding: 16px;
   border-radius: 12px;
-  background: #e5eae1;
+  background: #e1e5ea;
   white-space: pre;
 }
 .markdown-content pre code {
@@ -1341,18 +1341,18 @@ h3,
   font-size: 13px;
 }
 .markdown-content :is(th, td) {
-  border: 1px solid #d8e0d4;
+  border: 1px solid #d4dae0;
   padding: 10px 12px;
   text-align: left;
   min-width: 90px;
 }
 .markdown-content th {
-  background: #e8eedf;
+  background: #e0e6ed;
   font-weight: 600;
 }
 .markdown-content hr {
   border: 0;
-  border-top: 1px solid #d9e0d4;
+  border-top: 1px solid #d4dae0;
   margin: 22px 0;
 }
 .markdown-content .task-list-item {
@@ -1422,7 +1422,7 @@ h3,
 .calendar-records-link p {
   margin-top: 8px;
   font-size: 12px;
-  color: #67716a;
+  color: #5b6c7d;
 }
 .calendar-records-link .button {
   flex-shrink: 0;
@@ -1430,7 +1430,7 @@ h3,
 .activity-count {
   font-size: 12px;
   font-weight: 400;
-  color: #67716a;
+  color: #5b6c7d;
   margin-left: 8px;
 }
 .activity-search-empty {
@@ -1438,7 +1438,7 @@ h3,
   text-align: center;
 }
 .activity-search-empty p {
-  color: #67716a;
+  color: #5b6c7d;
   font-size: 13px;
   margin: 10px 0 18px;
 }
@@ -1473,8 +1473,8 @@ h3,
   padding: 9px 4px;
   border: 0;
   border-radius: 12px;
-  color: #6b7766;
-  background: #e5e9e0;
+  color: #5d6e80;
+  background: #e0e4e9;
   font-size: 12px;
 }
 .planning-progress button span {
@@ -1483,8 +1483,8 @@ h3,
   margin-top: 4px;
 }
 .planning-progress button[aria-current="step"] {
-  background: #dded9e;
-  color: #283c25;
+  background: #b5c5d6;
+  color: #25303c;
 }
 .planning-question {
   display: flex;
@@ -1496,11 +1496,11 @@ h3,
 }
 .planning-question > svg {
   flex-shrink: 0;
-  color: #536b3d;
+  color: #3d546b;
 }
 .planning-question small {
   font-size: 10px;
-  color: #78816e;
+  color: #64778b;
 }
 .planning-question h3 {
   font-size: 21px;
@@ -1509,7 +1509,7 @@ h3,
 .planning-question p {
   font-size: 13px;
   line-height: 1.9;
-  color: #65705d;
+  color: #566677;
 }
 .planning-fields {
   display: grid;
@@ -1531,7 +1531,7 @@ h3,
 }
 .planning-field small {
   font-size: 11px;
-  color: #6b765f;
+  color: #596a7c;
   line-height: 1.6;
 }
 .planning-check {
@@ -1595,7 +1595,7 @@ h3,
 .planning-week-data :is(small, span) {
   font-size: 11px;
   line-height: 1.65;
-  color: #67715f;
+  color: #576879;
 }
 .planning-decisions {
   display: grid;
@@ -1621,7 +1621,7 @@ h3,
 .planning-cautions {
   padding: 18px;
   border-radius: 16px;
-  background: #f7f7ec;
+  background: #eef2f5;
   margin: 20px 0;
 }
 .planning-cautions summary {
@@ -1638,7 +1638,7 @@ h3,
 }
 .planning-cautions a {
   text-decoration: underline;
-  color: #46633c;
+  color: #3c4f63;
 }
 .planning-sessions {
   display: grid;
@@ -1716,8 +1716,8 @@ h3,
   }
 }
 .planning-demo {
-  background: #edf3dc;
-  color: #52613c;
+  background: #e1e8ee;
+  color: #3c4e61;
   padding: 12px 16px;
   border-radius: 12px;
   font-size: 12px;
@@ -1731,14 +1731,14 @@ h3,
 }
 .recipe-picker {
   padding: 22px;
-  background: #eef1e7;
+  background: #e7ecf1;
   border-radius: 24px;
   margin: 4px 0 14px;
 }
 .recipe-picker > small {
   font-size: 10px;
   letter-spacing: 0.12em;
-  color: #67705c;
+  color: #566676;
 }
 .recipe-picker h3 {
   margin: 8px 0;
@@ -1757,15 +1757,15 @@ h3,
   gap: 7px;
   padding: 16px;
   border: 1px solid transparent;
-  background: #fafbf8;
+  background: #f8fafb;
   border-radius: 18px;
   color: inherit;
   min-width: 0;
   line-height: 1.65;
 }
 .recipe-options button[aria-pressed="true"] {
-  border-color: #7c9148;
-  background: #e1edb4;
+  border-color: #4e6c8b;
+  background: #c3d0de;
 }
 .recipe-options strong {
   font-size: 14px;
@@ -1777,7 +1777,7 @@ h3,
   overflow-wrap: anywhere;
 }
 .recipe-options small {
-  color: #70766a;
+  color: #5e7082;
 }
 .recipe-review {
   margin-top: 16px;
@@ -1889,9 +1889,9 @@ h3,
 }
 .workout-step-summary small {
   font-size: 11px;
-  color: #717866;
+  color: #5d6f81;
   padding: 5px 9px;
-  background: #edf0e7;
+  background: #e7ecf0;
   border-radius: 12px;
 }
 .workout-step[open] > summary {
@@ -1926,7 +1926,7 @@ h3,
   top: 50%;
   transform: translateY(-50%);
   font-size: 11px;
-  color: #737c67;
+  color: #5f7184;
   pointer-events: none;
 }
 .range-toggle {
@@ -1980,7 +1980,7 @@ h3,
 }
 .period-segment {
   display: flex;
-  background: #dfe3dc;
+  background: #dae0e5;
   padding: 4px;
   border-radius: 22px;
 }
@@ -2005,7 +2005,7 @@ h3,
   width: 135px;
   border: 0;
   background: transparent;
-  color: #6c7468;
+  color: #5c6e80;
   padding: 2px;
   font-size: 11px;
 }
@@ -2095,9 +2095,9 @@ h3,
 }
 .period-trigger-unit {
   font-size: 10px;
-  color: #75806f;
+  color: #64778b;
   padding-left: 9px;
-  border-left: 1px solid #dce0d8;
+  border-left: 1px solid #d6dce2;
 }
 .period-popover {
   position: absolute;
@@ -2106,12 +2106,12 @@ h3,
   width: 330px;
   z-index: 45;
   padding: 22px;
-  background: #fafbf8;
+  background: #f8fafb;
   border: 1px solid #fff;
   border-radius: 24px;
   box-shadow:
-    0 18px 60px #26332426,
-    0 2px 10px #2633240a;
+    0 18px 60px #242b3326,
+    0 2px 10px #242b330a;
 }
 .period-popover h3 {
   margin: 0 0 16px;
@@ -2127,12 +2127,12 @@ h3,
   padding: 8px 3px;
   font-size: 11px;
   border: 0;
-  background: #edf0e8;
+  background: #e8ecf0;
   border-radius: 14px;
 }
 .period-presets button[aria-pressed="true"] {
-  background: #dfedae;
-  color: #324021;
+  background: #c0cedb;
+  color: #23303e;
 }
 .period-popover .period-segment {
   width: 100%;
@@ -2153,16 +2153,16 @@ h3,
   flex-direction: column;
   gap: 8px;
   font-size: 11px;
-  color: #6c7668;
+  color: #5d6f81;
 }
 .period-date-row input {
   width: 100%;
   min-width: 0;
   padding: 10px;
-  border: 1px solid #e4e8de;
+  border: 1px solid #dee3e8;
   border-radius: 12px;
   background: white;
-  color: #263023;
+  color: #232930;
   font: inherit;
   font-size: 13px;
 }
@@ -2170,14 +2170,14 @@ h3,
   margin: 16px 0;
   font-size: 12px;
   text-align: center;
-  color: #65745b;
+  color: #576778;
 }
 .period-popover-actions {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
   padding-top: 14px;
-  border-top: 1px solid #e6e9e0;
+  border-top: 1px solid #e0e4e9;
 }
 @media (max-width: 600px) {
   .overview-period-heading {
@@ -2235,7 +2235,7 @@ h3,
 }
 .activity-metric-chart .analysis-toolbar small {
   font-size: 11px;
-  color: #7d8479;
+  color: #6a7e93;
 }
 .training-response .activity-insights {
   margin-top: 14px;
@@ -2247,7 +2247,7 @@ h3,
   margin-top: 18px;
 }
 .training-response .analysis-columns > .analysis-section {
-  background: #f7f8f3;
+  background: #f3f5f8;
 }
 @media (max-width: 700px) {
   .segment-charts {
@@ -2266,7 +2266,7 @@ h3,
   font-weight: 500;
   line-height: 1.7;
   text-align: center;
-  color: #35412f;
+  color: #2f3841;
 }
 .period-current-row {
   display: flex;
@@ -2275,16 +2275,16 @@ h3,
 }
 .period-current {
   padding: 7px 15px;
-  border: 1px solid #e0e6d5;
+  border: 1px solid #d5dee6;
   border-radius: 16px;
-  background: #edf2df;
-  color: #4a5e37;
+  background: #e2e8ef;
+  color: #374a5e;
   font-size: 11px;
 }
 .period-current:disabled {
   opacity: 0.6;
   cursor: default;
-  background: #f0f2eb;
+  background: #ebeef2;
 }
 
 /* Keep mobile form text readable without iOS focus zoom. */
@@ -2349,16 +2349,16 @@ body :is(main, .modal) input::-webkit-datetime-edit {
 .training-plan-stats > div { display:flex; flex-direction:column; gap:10px; }
 .training-plan-stats strong { font-size:30px; font-weight:400; }
 .training-plan-stats small { font-size:13px; margin-left:6px; }
-.training-plan-overview progress { width:100%; height:8px; accent-color:#869871; }
+.training-plan-overview progress { width:100%; height:8px; accent-color:#718498; }
 .training-plan-empty { display:flex; flex-direction:column; align-items:center; text-align:center; padding:40px 28px; gap:16px; }
 .training-plan-space .training-plan-empty h2 { font-size:22px; line-height:1.45; font-weight:500; text-wrap:balance; }
-.training-plan-empty > p { margin:0; max-width:440px; font-size:14px; line-height:1.8; color:#626e64; word-break:keep-all; overflow-wrap:anywhere; }
+.training-plan-empty > p { margin:0; max-width:440px; font-size:14px; line-height:1.8; color:#576879; word-break:keep-all; overflow-wrap:anywhere; }
 .training-plan-empty > .button { margin:4px 0; min-height:44px; font-size:13px; }
 .training-plan-empty > p.muted { font-size:12px; line-height:1.7; max-width:400px; }
 .training-plan-actions { flex-wrap:wrap; gap:12px; }
 .training-plan-sessions { margin-top:18px; display:grid; gap:10px; }
-.training-plan-session { display:grid; grid-template-columns:110px minmax(0,1fr) auto; gap:16px; align-items:center; text-align:left; background:#f3f5ef; border-radius:16px; padding:16px; width:100%; }
-.training-plan-session.is-complete { background:#e9f1e4; }
+.training-plan-session { display:grid; grid-template-columns:110px minmax(0,1fr) auto; gap:16px; align-items:center; text-align:left; background:#eff2f5; border-radius:16px; padding:16px; width:100%; }
+.training-plan-session.is-complete { background:#e5ebf0; }
 .training-plan-session strong { display:block; overflow-wrap:anywhere; font-weight:500; }
 .training-plan-session small { display:block; margin-top:6px; line-height:1.7; }
 .training-plan-date,.training-plan-status { font-size:12px; }
