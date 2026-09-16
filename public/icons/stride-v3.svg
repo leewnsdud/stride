@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Stride — Flow S</title>
+  <desc id="desc">A custom, solid S monogram with swept curves and forward-cut terminals. Cool light gray on cobalt blue. Editable vector artwork. Square full-bleed master; rounded corners are for previews only.</desc>
+  <g id="background"><rect width="1024" height="1024" fill="#2D5EF4"/></g>
+  <g id="symbol">
+  <path d="M 758 236
+  L 708 366
+  H 478
+  C 432 366 408 388 408 420
+  C 408 447 429 464 470 476
+  L 617 517
+  C 713 544 763 596 763 675
+  C 763 785 678 847 551 847
+  H 261
+  L 311 717
+  H 550
+  C 601 717 628 698 628 666
+  C 628 639 606 622 564 610
+  L 417 569
+  C 320 542 271 488 271 410
+  C 271 302 353 236 478 236
+  Z" fill="#F1F4F8" transform="translate(0 -29.5)"/>
+  </g>
+</svg>

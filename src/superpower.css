@@ -1,0 +1,2371 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;450;500;550;600;650;700&family=Noto+Sans+KR:wght@300;400;500;600&display=swap");
+@font-face {
+  font-family: "Stride Dots";
+  src: url("/fonts/StrideDots-Regular.woff2?v=4") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+/* SuperPower reference: cool seamless canvas, pill navigation, soft panels,
+   light geometric type and dot-matrix display numerals. */
+:root {
+  font-family: "Manrope", "Noto Sans KR", sans-serif;
+  color: #252827;
+  background: #e9ebea;
+  --ink: #252827;
+  --muted: #6f7671;
+  --line: #dfe2df;
+  --green: #deee95;
+  font-size: 14px;
+}
+body {
+  background: #e9ebea;
+  -webkit-font-smoothing: antialiased;
+}
+.sidebar {
+  background: transparent;
+  border: 0;
+  padding: 28px 18px;
+  width: 224px;
+}
+.brand {
+  font-size: 30px;
+  letter-spacing: -1.5px;
+}
+.workspace {
+  border: 0;
+  background: #ffffff55;
+  border-radius: 24px;
+}
+nav {
+  gap: 8px;
+}
+nav button,
+.settings-nav {
+  background: #ffffff4d;
+  border: 0;
+  border-radius: 28px;
+  min-height: 46px;
+  color: #626964;
+  padding: 12px 16px;
+  font-size: 13px;
+}
+nav button.active {
+  background: #fff;
+  color: #202723;
+  font-weight: 500;
+  box-shadow: 0 3px 16px #14221c05;
+}
+nav button:hover,
+.settings-nav:hover {
+  background: #ffffffbb;
+}
+.motto,
+.nav-label {
+  color: #6d766f;
+}
+main {
+  margin-left: 224px;
+  width: calc(100% - 224px);
+  min-width: 0;
+}
+.topbar {
+  background: transparent;
+  border-bottom: 1px solid #ffffff60;
+  height: 70px;
+  padding: 0 32px;
+}
+.main-content {
+  padding: 32px;
+  max-width: 1540px;
+}
+.page-heading {
+  margin-bottom: 30px;
+  align-items: flex-start;
+}
+.page-heading h1 {
+  font-size: clamp(25px, 2.35vw, 34px);
+  line-height: 1.3;
+  font-weight: 300;
+  letter-spacing: -1.5px;
+  margin: 8px 0 12px;
+}
+.page-heading p {
+  font-size: 13px;
+  color: #6f7671;
+}
+.eyebrow {
+  color: #6e7871;
+  font-size: 9px;
+  letter-spacing: 1.6px;
+}
+.heading-actions {
+  padding-top: 12px;
+  flex-shrink: 0;
+}
+.button,
+.date-pill,
+.mode-button {
+  border: 0;
+  background: #ffffffcc;
+  border-radius: 24px;
+  min-height: 40px;
+  color: #343d36;
+  font-size: 12px;
+}
+.button.primary {
+  background: #e0f581;
+  border: 0;
+  color: #253123;
+}
+.button.primary:hover {
+  background: #d4ed67;
+}
+.tag {
+  background: #f0f2ee;
+  color: #56634f;
+  font-size: 10px;
+}
+.tag.light,
+.tag.green {
+  background: #e4f096;
+  color: #36442a;
+  letter-spacing: 0;
+  font-size: 10px;
+}
+.mode-button {
+  padding: 6px 14px;
+}
+.mode-button span {
+  color: #536047;
+}
+.breadcrumb {
+  font-size: 12px;
+}
+.card {
+  border: 0;
+  background: #ffffffb8;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: none;
+}
+h2 {
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: -0.7px;
+}
+h3 {
+  font-weight: 400;
+  font-size: 15px;
+}
+.section-heading h2 {
+  font-size: 19px;
+}
+.section-heading h2 > span {
+  display: none;
+}
+.text-button {
+  color: #4e5c50;
+  font-size: 12px;
+}
+.overview-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) minmax(195px, 0.7fr);
+  gap: 16px;
+}
+.weekly-card,
+.distance-card {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  border-radius: 26px;
+  overflow: hidden;
+}
+.weekly-card {
+  background-color: #bad3a4;
+  background-image: url("/images/insight-field.png");
+  color: #18351f;
+}
+.distance-card {
+  background-color: #e2d6bc;
+  background-image: url("/images/distance-field.png");
+}
+.weekly-card > .row {
+  font-size: 13px;
+}
+.score-display {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 152px;
+  gap: 12px;
+}
+.page-overview .score-display strong,
+.page-overview .big-stat,
+.page-overview .metric-card > strong,
+.page-overview .stat > strong,
+.page-overview .goal-count > strong {
+  font-family: "Stride Dots", "Manrope", sans-serif;
+  font-variation-settings: normal;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+.score-display strong {
+  font-size: 58px;
+  line-height: 1;
+  letter-spacing: 0;
+  color: #12301a;
+}
+.score-display strong small {
+  font-family: "Manrope", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.score-display > span {
+  font-size: 12px;
+  color: #183b20;
+}
+.score-display progress {
+  appearance: none;
+  width: 65%;
+  height: 4px;
+  border: 0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.score-display progress::-webkit-progress-bar {
+  background: #ffffff77;
+}
+.score-display progress::-webkit-progress-value {
+  background: #284e2d;
+}
+.weekly-bottom {
+  padding-top: 14px;
+  border-top: 1px solid #ffffff50;
+}
+.weekly-bottom strong {
+  font-size: 23px;
+  color: #f7fff4;
+  font-weight: 500;
+}
+.weekly-bottom span,
+.weekly-bottom strong small {
+  color: #eef8e8;
+  font-size: 11px;
+}
+.big-stat {
+  font-size: 52px;
+  line-height: 1.15;
+  margin: 20px 0 4px;
+  color: #382f22;
+}
+.big-stat span {
+  font-family: "Manrope", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  margin-left: 8px;
+}
+.distance-card .muted {
+  color: #534f45;
+  font-size: 12px;
+}
+.distance-card .chart {
+  margin-top: 16px;
+}
+.metric-stack {
+  gap: 16px;
+}
+.metric-card,
+.metric-card.warm,
+.next-card,
+.coach-card,
+.goal-preview {
+  background: #ffffffb8;
+}
+.metric-card > strong {
+  font-size: 37px;
+}
+.metric-card > strong {
+  margin-top: 12px;
+  line-height: 1.15;
+}
+.metric-card > strong small {
+  font-family: "Manrope", "Noto Sans KR", sans-serif;
+  font-variation-settings: normal;
+  font-weight: 400;
+  color: #717a73;
+  letter-spacing: 0;
+}
+.button,
+.date-pill,
+.mode-button {
+  box-shadow: inset 0 0 0 1px #ffffffa0;
+}
+.button.primary {
+  box-shadow: none;
+}
+.metric-card p,
+.coach-card p,
+.next-body p {
+  color: #67716a;
+  font-size: 12px;
+}
+.metric-card .row span {
+  font-size: 12px;
+}
+.metric-card .tag {
+  display: none;
+}
+.next-icon,
+.activity-icon,
+.avatar {
+  background: #f0f3ee;
+  color: #485744;
+  border-radius: 50%;
+}
+.middle-grid,
+.bottom-grid {
+  gap: 16px;
+  margin-top: 16px;
+}
+.next-footer {
+  align-items: center;
+  gap: 16px;
+}
+.next-footer > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.next-body {
+  min-width: 0;
+}
+.next-body > div {
+  min-width: 0;
+}
+.next-body h2 {
+  overflow-wrap: anywhere;
+  font-size: 21px;
+}
+.coach-card h2 {
+  font-size: 21px;
+}
+.activity-row {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) auto auto auto 16px;
+  gap: 14px;
+}
+.activity-list.compact .activity-row {
+  grid-template-columns: 40px minmax(0, 1fr) auto 16px;
+}
+.activity-name strong {
+  font-size: 13px;
+  line-height: 1.5;
+}
+.activity-name small {
+  font-size: 11px;
+  color: #717a73;
+}
+.activity-number {
+  font-size: 21px;
+}
+.activity-extra {
+  min-width: 0;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: #5c695e;
+}
+.calendar {
+  border: 0;
+  border-radius: 26px;
+  background: #ffffffa8;
+}
+.day {
+  min-width: 0;
+}
+.calendar-activity,
+.calendar-completed,
+.calendar-pair {
+  border-radius: 16px;
+}
+.calendar-activity small,
+.calendar-completed small,
+.calendar-plan-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  flex-wrap: wrap;
+}
+.calendar-activity span,
+.calendar-completed span {
+  font-size: 11px;
+  line-height: 1.65;
+}
+.calendar-activity strong,
+.calendar-completed strong {
+  overflow-wrap: anywhere;
+  line-height: 1.65;
+}
+.calendar-tools {
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.calendar-legend {
+  flex-wrap: wrap;
+}
+.calendar-legend span {
+  border-radius: 24px;
+  padding: 8px 12px;
+}
+.plan-summary {
+  background: #ffffff80;
+  border-radius: 20px;
+  flex-wrap: wrap;
+}
+.plan-summary strong {
+  white-space: nowrap;
+}
+.filters {
+  flex-wrap: wrap;
+}
+input,
+select,
+textarea {
+  border: 1px solid #dce2dc;
+  border-radius: 12px;
+  background: #fff;
+  min-width: 0;
+  max-width: 100%;
+  color: #27352a;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #718767;
+  outline-offset: 2px;
+}
+.field > span,
+.workout-field > span {
+  color: #52614f;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.helper {
+  color: #6b756c;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.modal {
+  background: #eef0ee;
+  border: 1px solid #fff;
+  border-radius: 28px;
+  padding: 26px;
+  max-height: calc(100dvh - 40px);
+}
+.modal.wide {
+  width: 1020px;
+}
+.modal > header {
+  position: sticky;
+  top: -26px;
+  padding: 16px 0;
+  margin-top: -10px;
+  background: #eef0ee;
+  z-index: 5;
+  gap: 16px;
+}
+.modal > header h2 {
+  font-weight: 450;
+  overflow-wrap: anywhere;
+}
+.modal > header .icon-button {
+  flex-shrink: 0;
+  background: #fff;
+  width: 38px;
+  height: 38px;
+}
+.analysis-section,
+.insight-panel,
+.completed-plan {
+  background: #ffffffc9;
+  border: 0;
+  border-radius: 24px;
+  padding: 24px;
+  min-width: 0;
+}
+.activity-analysis {
+  gap: 20px;
+}
+.analysis-stats {
+  grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+  gap: 24px;
+}
+.analysis-stats strong {
+  display: block;
+  font-weight: 450;
+  font-size: 22px;
+  overflow-wrap: anywhere;
+}
+.analysis-stats small {
+  color: #69736a;
+  font-size: 12px;
+}
+.analysis-stats em {
+  white-space: nowrap;
+}
+.analysis-columns {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.analysis-heading h3 {
+  font-size: 24px;
+  font-weight: 400;
+}
+.analysis-heading small {
+  color: #63715e;
+}
+.analysis-table-wrap,
+.lap-chart-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+.analysis-table {
+  font-size: 12px;
+}
+.analysis-table th,
+.analysis-table td {
+  white-space: nowrap;
+}
+.metric-tabs button {
+  border-radius: 22px;
+  background: #f0f3ed;
+  padding: 9px 12px;
+  font-size: 12px;
+}
+.metric-tabs button[aria-pressed="true"] {
+  background: #dfed9f;
+  color: #2d3b29;
+}
+.metric-tabs button:disabled {
+  cursor: default;
+}
+.zone-row {
+  grid-template-columns: 55px minmax(20px, 1fr) 98px;
+  gap: 10px;
+}
+.zone-row strong {
+  white-space: nowrap;
+  font-size: 12px;
+}
+.zone-row strong small {
+  display: block;
+  text-align: right;
+}
+.activity-insights {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+.insight-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.insight-panel h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.insight-panel .helper {
+  margin-bottom: 16px;
+}
+.time-bars,
+.effect-bars {
+  display: grid;
+  gap: 18px;
+  margin-top: 22px;
+}
+.time-bars strong,
+.effect-bars strong {
+  font-size: 19px;
+  font-weight: 450;
+  font-variant-numeric: tabular-nums;
+}
+.insight-track {
+  margin-top: 8px;
+  height: 8px;
+  background: #e8ece6;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.insight-track i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+}
+.effect-track {
+  height: 10px;
+}
+.scale-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #7a827a;
+  margin-top: 5px;
+}
+.insight-tooltip {
+  display: grid;
+  gap: 5px;
+  background: #fff;
+  border: 1px solid #dce3d9;
+  box-shadow: 0 5px 25px #1d301416;
+  border-radius: 14px;
+  padding: 14px;
+  font-size: 12px;
+}
+.workout-step {
+  background: #f7f9f5;
+  border-color: #dfe6db;
+  border-radius: 16px;
+  min-width: 0;
+}
+.workout-step-head {
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.workout-step-head > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.workout-step-head button {
+  min-height: 34px;
+}
+.workout-step .workout-steps {
+  margin-left: 8px;
+}
+.workout-section,
+.workout-fields {
+  min-width: 0;
+}
+.workout-step .form-grid,
+.intensity-fields {
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+}
+.form-actions,
+.link-panel .row,
+.comparison {
+  flex-wrap: wrap;
+}
+.connection-card,
+.settings-card {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #486b37;
+  outline-offset: 3px;
+}
+@media (max-width: 1200px) {
+  .overview-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .metric-stack {
+    grid-column: 1/-1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .metric-card {
+    min-height: 155px;
+  }
+  .activity-row {
+    gap: 10px;
+  }
+}
+@media (max-width: 1000px) and (min-width: 701px) {
+  .sidebar {
+    width: 190px;
+    padding: 24px 12px;
+  }
+  main {
+    margin-left: 190px;
+    width: calc(100% - 190px);
+  }
+  .main-content {
+    padding: 24px;
+  }
+  .calendar {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+  .calendar-activity,
+  .calendar-completed {
+    padding: 9px 6px;
+  }
+  .bottom-grid,
+  .middle-grid {
+    grid-template-columns: 1fr;
+  }
+  .activity-row {
+    grid-template-columns: 36px minmax(0, 1fr) auto auto 14px;
+  }
+  .activity-extra:last-of-type {
+    display: none;
+  }
+}
+@media (max-width: 700px) {
+  .sidebar {
+    display: none;
+  }
+  main {
+    margin-left: 0;
+    width: 100%;
+  }
+  .topbar {
+    padding: 0 18px;
+    height: 62px;
+  }
+  .main-content {
+    padding: 24px 16px 94px;
+  }
+  .page-heading {
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .page-heading h1 {
+    font-size: 26px;
+  }
+  .heading-actions {
+    padding: 0;
+  }
+  .section-heading {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .card {
+    border-radius: 24px;
+    padding: 20px;
+  }
+  .overview-grid,
+  .middle-grid,
+  .bottom-grid {
+    grid-template-columns: 1fr;
+  }
+  .metric-stack {
+    grid-column: auto;
+    gap: 12px;
+  }
+  .metric-card > strong {
+    font-size: 34px;
+  }
+  .metric-card {
+    padding: 18px;
+  }
+  .metric-card .row > svg {
+    display: none;
+  }
+  .calendar {
+    grid-template-columns: 1fr;
+  }
+  .calendar-activity,
+  .calendar-completed {
+    padding: 14px;
+  }
+  .calendar-activity small,
+  .calendar-completed small,
+  .calendar-plan-label {
+    font-size: 11px;
+  }
+  .calendar-activity span,
+  .calendar-completed span {
+    font-size: 12px;
+  }
+  .activity-row,
+  .activity-list.compact .activity-row {
+    grid-template-columns: 34px minmax(0, 1fr) auto;
+    gap: 10px;
+  }
+  .activity-name {
+    grid-column: 2;
+  }
+  .activity-number {
+    grid-column: 3;
+    grid-row: 1;
+    font-size: 19px;
+  }
+  .activity-extra {
+    display: block;
+    grid-row: 2;
+    text-align: left;
+    font-size: 12px;
+  }
+  .activity-extra:first-of-type {
+    grid-column: 2;
+  }
+  .activity-extra:last-of-type {
+    grid-column: 3;
+    text-align: right;
+  }
+  .activity-row > svg {
+    display: none;
+  }
+  .activity-name strong {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .activity-icon {
+    width: 34px;
+    height: 34px;
+  }
+  .modal-backdrop {
+    padding: 8px;
+  }
+  .modal {
+    padding: 18px;
+    border-radius: 24px;
+    max-height: calc(100dvh - 16px);
+  }
+  .modal > header {
+    top: -18px;
+  }
+  .analysis-section,
+  .insight-panel,
+  .completed-plan {
+    padding: 18px;
+    border-radius: 20px;
+  }
+  .analysis-columns,
+  .insight-grid {
+    grid-template-columns: 1fr;
+  }
+  .analysis-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 12px;
+  }
+  .analysis-stats strong {
+    font-size: 19px;
+  }
+  .analysis-stats > div {
+    min-width: 0;
+  }
+  .analysis-toolbar select {
+    width: 100%;
+    max-width: 100%;
+  }
+  .analysis-heading h3 {
+    font-size: 23px;
+  }
+  .form-grid,
+  .workout-step .form-grid,
+  .intensity-fields {
+    grid-template-columns: 1fr;
+  }
+  .workout-step .workout-steps {
+    margin-left: 0;
+  }
+  .workout-step {
+    padding: 12px;
+  }
+  .filters input {
+    width: 100%;
+  }
+  .mobile-nav {
+    background: #f9fbf5f5;
+    backdrop-filter: blur(16px);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .mobile-nav button {
+    min-height: 56px;
+    color: #59664f;
+  }
+  .mobile-nav button.active {
+    color: #23341e;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+/* The existing sidebar becomes the mobile navigation; keep every destination reachable. */
+@media (max-width: 700px) {
+  .sidebar {
+    display: block;
+    position: fixed;
+    inset: auto 0 0;
+    width: 100%;
+    height: auto;
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+    background: #f9fbf5f5;
+    backdrop-filter: blur(16px);
+    z-index: 20;
+    border-top: 1px solid #dfe5da;
+  }
+  .sidebar .brand,
+  .sidebar .workspace,
+  .sidebar .nav-label,
+  .sidebar .sidebar-bottom {
+    display: none;
+  }
+  .sidebar nav {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 3px;
+    margin: 0;
+  }
+  .sidebar nav button {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 8px 2px;
+    min-height: 58px;
+    border-radius: 18px;
+    background: transparent;
+  }
+  .sidebar nav button > span {
+    display: block;
+    font-size: 10px;
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+  .sidebar nav button > .ai-tag {
+    display: none;
+  }
+  .sidebar nav button.active {
+    background: #e6f0c1;
+  }
+  .heading-actions .button {
+    font-size: 12px;
+    gap: 7px;
+    padding: 10px 14px;
+  }
+  .page-heading {
+    flex-direction: column;
+  }
+  .detail-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 12px;
+    background: #ffffffb8;
+    border-radius: 22px;
+  }
+  .detail-metrics strong {
+    font-size: 23px;
+  }
+  .activity-row .activity-extra:nth-of-type(4) {
+    grid-column: 2;
+  }
+  .activity-row .activity-extra:nth-of-type(5) {
+    grid-column: 3;
+  }
+}
+@media (min-width: 701px) and (max-width: 800px) {
+  .sidebar {
+    width: 82px;
+  }
+  main {
+    margin-left: 82px;
+    width: calc(100% - 82px);
+  }
+  .sidebar nav button {
+    padding: 12px;
+  }
+}
+p,
+h1,
+h2,
+h3,
+.field > span,
+.workout-field > span {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+.page-footer,
+.local-status,
+.review-date,
+.chat-header small,
+.detail-heading p {
+  color: #70796f;
+}
+@media (max-width: 700px) {
+  .page-heading p {
+    max-width: none;
+  }
+  .chat {
+    padding: 20px;
+  }
+  .messages {
+    min-height: 220px;
+    height: 360px;
+  }
+  .chat-input {
+    gap: 8px;
+  }
+}
+@media (max-width: 1000px) {
+  .calendar {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+  .day-column {
+    display: flex;
+    min-height: 110px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .day-column header {
+    flex: 0 0 66px;
+    min-width: 66px;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid var(--line);
+    border-bottom: 0;
+  }
+  .day-sessions {
+    flex: 1;
+    min-width: 0;
+    width: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px;
+  }
+  .calendar-activity,
+  .calendar-completed,
+  .calendar-pair {
+    flex: 1 1 180px;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .calendar-pair .session-card {
+    width: 100%;
+    min-width: 0;
+  }
+  .day-sessions .add-day {
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+  }
+}
+@media (min-width: 701px) and (max-width: 800px) {
+  .settings-nav {
+    font-size: 0;
+    padding: 14px 0;
+    gap: 0;
+    justify-content: center;
+  }
+}
+
+/* Sessions are local, independent conversations, including on narrow screens. */
+.coach-workspace {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+.conversation-sidebar {
+  padding: 18px;
+  min-width: 0;
+}
+.conversation-sidebar > .button {
+  width: 100%;
+  justify-content: center;
+}
+.conversation-tabs {
+  display: flex;
+  gap: 8px;
+  margin: 20px 0 12px;
+}
+.conversation-tabs button {
+  border: 0;
+  border-radius: 20px;
+  padding: 9px 14px;
+  background: transparent;
+  color: #626c65;
+}
+.conversation-tabs button[aria-pressed="true"] {
+  background: #e5edce;
+  color: #263425;
+}
+.conversation-list {
+  display: grid;
+  gap: 6px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+.conversation-list > button {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  text-align: left;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  padding: 12px;
+  color: #465248;
+  min-width: 0;
+}
+.conversation-list > button[aria-current="true"] {
+  background: #fff;
+  color: #202a22;
+}
+.conversation-list > button > svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.conversation-list > button > span {
+  min-width: 0;
+}
+.conversation-list strong {
+  display: block;
+  font-weight: 500;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+.conversation-list small {
+  display: block;
+  font-size: 10px;
+  color: #737b74;
+  margin-top: 5px;
+}
+.coach-data-note {
+  margin-top: 20px;
+  border-top: 1px solid #e0e5df;
+  padding-top: 16px;
+  color: #627065;
+  font-size: 12px;
+  line-height: 1.8;
+}
+.coach-data-note summary {
+  cursor: pointer;
+}
+.coach-data-note p {
+  margin: 12px 0;
+}
+.session-chat {
+  min-width: 0;
+  padding: 24px;
+}
+.session-chat .chat-header {
+  gap: 12px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.conversation-heading {
+  flex: 1;
+  min-width: 120px;
+}
+.conversation-heading > strong {
+  display: block;
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+}
+.conversation-actions {
+  display: flex;
+  gap: 4px;
+}
+.conversation-actions .icon-button {
+  width: 36px;
+  height: 36px;
+  background: #fff;
+}
+.rename-conversation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.rename-conversation input {
+  width: 100%;
+  padding: 9px 12px;
+}
+.session-chat .messages {
+  height: 440px;
+  min-height: 260px;
+}
+.session-chat .message p {
+  overflow-wrap: anywhere;
+}
+.coach-error {
+  color: #a53535;
+  background: #fff0ee;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 13px;
+}
+.coach-pending {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #657165;
+  padding: 16px 0;
+}
+@media (max-width: 1100px) {
+  .coach-workspace {
+    grid-template-columns: 1fr;
+  }
+  .conversation-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-height: 180px;
+  }
+  .coach-data-note {
+    margin-top: 12px;
+  }
+}
+@media (max-width: 700px) {
+  .session-chat {
+    padding: 18px;
+  }
+  .session-chat .messages {
+    height: 380px;
+  }
+  .conversation-list {
+    grid-template-columns: 1fr;
+  }
+  .session-chat .welcome {
+    padding: 20px 0;
+  }
+}
+.session-chat .message {
+  font-size: 14px;
+  line-height: 1.85;
+  background: #f4f6f2;
+  border-radius: 18px;
+}
+.session-chat .message.user {
+  background: #e7efcf;
+}
+.session-chat .message-label {
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  color: #5f7058;
+}
+.session-chat .chat-note {
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.markdown-content {
+  font-size: 14px;
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+  min-width: 0;
+  color: #303b32;
+}
+.markdown-content :is(p, ul, ol, blockquote, pre, table) {
+  margin: 0 0 14px;
+}
+.markdown-content > :last-child {
+  margin-bottom: 0;
+}
+.markdown-content :is(h1, h2, h3, h4, h5, h6) {
+  font-family: inherit;
+  font-weight: 600;
+  line-height: 1.55;
+  letter-spacing: -0.3px;
+  margin: 24px 0 12px;
+}
+.markdown-content > :first-child {
+  margin-top: 0;
+}
+.markdown-content h1 {
+  font-size: 22px;
+}
+.markdown-content h2 {
+  font-size: 20px;
+}
+.markdown-content h3 {
+  font-size: 17px;
+}
+.markdown-content :is(h4, h5, h6) {
+  font-size: 15px;
+}
+.markdown-content strong {
+  font-weight: 650;
+}
+.markdown-content :is(ul, ol) {
+  padding-left: 24px;
+}
+.markdown-content li {
+  margin: 5px 0;
+}
+.markdown-content li > :is(ul, ol) {
+  margin: 6px 0;
+}
+.markdown-content blockquote {
+  border-left: 3px solid #a8bd82;
+  padding: 8px 16px;
+  background: #eaf0e3;
+  border-radius: 0 10px 10px 0;
+}
+.markdown-content a {
+  color: #386326;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.markdown-content code {
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+  padding: 2px 5px;
+  background: #e5eae1;
+  border-radius: 5px;
+}
+.markdown-content pre {
+  overflow-x: auto;
+  padding: 16px;
+  border-radius: 12px;
+  background: #e5eae1;
+  white-space: pre;
+}
+.markdown-content pre code {
+  padding: 0;
+  background: transparent;
+  white-space: pre;
+}
+.markdown-content .markdown-table {
+  overflow-x: auto;
+  max-width: 100%;
+  margin: 14px 0;
+}
+.markdown-content table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13px;
+}
+.markdown-content :is(th, td) {
+  border: 1px solid #d8e0d4;
+  padding: 10px 12px;
+  text-align: left;
+  min-width: 90px;
+}
+.markdown-content th {
+  background: #e8eedf;
+  font-weight: 600;
+}
+.markdown-content hr {
+  border: 0;
+  border-top: 1px solid #d9e0d4;
+  margin: 22px 0;
+}
+.markdown-content .task-list-item {
+  list-style: none;
+}
+.markdown-content .task-list-item input {
+  margin-right: 8px;
+}
+.session-chat .markdown-content p {
+  white-space: normal;
+}
+.delete-conversation {
+  border: 1px solid #e5c4bf;
+  background: #fff4f1;
+  border-radius: 16px;
+  padding: 18px;
+  margin: 12px 0;
+  overflow-wrap: anywhere;
+}
+.delete-conversation p {
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 8px 0 16px;
+}
+.delete-conversation .row {
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+.button.danger {
+  background: #a2352c;
+  color: white;
+}
+.conversation-actions .danger-icon {
+  color: #9a453a;
+}
+.conversation-actions .icon-button {
+  width: 40px;
+  height: 40px;
+}
+.activity-icon svg,
+.next-icon svg,
+.sidebar nav svg {
+  flex-shrink: 0;
+}
+@media (max-width: 700px) {
+  .session-chat .messages {
+    padding: 16px 4px;
+  }
+  .session-chat .message {
+    max-width: 100%;
+    padding: 16px 14px;
+  }
+  .markdown-content :is(ul, ol) {
+    padding-left: 20px;
+  }
+}
+.calendar-back {
+  margin-bottom: 22px;
+}
+.calendar-records-link {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.calendar-records-link p {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #67716a;
+}
+.calendar-records-link .button {
+  flex-shrink: 0;
+}
+.activity-count {
+  font-size: 12px;
+  font-weight: 400;
+  color: #67716a;
+  margin-left: 8px;
+}
+.activity-search-empty {
+  padding: 44px 20px;
+  text-align: center;
+}
+.activity-search-empty p {
+  color: #67716a;
+  font-size: 13px;
+  margin: 10px 0 18px;
+}
+.activity-search-empty .text-button {
+  margin: auto;
+}
+@media (max-width: 700px) {
+  .calendar-records-link {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  .calendar-records-link .button {
+    justify-content: center;
+  }
+  .calendar-back {
+    margin-bottom: 18px;
+  }
+}
+/* Guided coaching keeps questions, decisions and the review in one readable flow. */
+.plan-coach {
+  min-width: 0;
+}
+.planning-progress {
+  display: flex;
+  gap: 6px;
+  margin: 6px 0 24px;
+}
+.planning-progress button {
+  flex: 1;
+  min-width: 0;
+  padding: 9px 4px;
+  border: 0;
+  border-radius: 12px;
+  color: #6b7766;
+  background: #e5e9e0;
+  font-size: 12px;
+}
+.planning-progress button span {
+  display: block;
+  font-size: 10px;
+  margin-top: 4px;
+}
+.planning-progress button[aria-current="step"] {
+  background: #dded9e;
+  color: #283c25;
+}
+.planning-question {
+  display: flex;
+  gap: 14px;
+  padding: 24px;
+  background: #fff;
+  border-radius: 22px;
+  margin-bottom: 24px;
+}
+.planning-question > svg {
+  flex-shrink: 0;
+  color: #536b3d;
+}
+.planning-question small {
+  font-size: 10px;
+  color: #78816e;
+}
+.planning-question h3 {
+  font-size: 21px;
+  margin: 8px 0 12px;
+}
+.planning-question p {
+  font-size: 13px;
+  line-height: 1.9;
+  color: #65705d;
+}
+.planning-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.planning-field {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-width: 0;
+  font-size: 13px;
+}
+.planning-field input,
+.planning-field select,
+.planning-field textarea {
+  width: 100%;
+  padding: 12px;
+}
+.planning-field small {
+  font-size: 11px;
+  color: #6b765f;
+  line-height: 1.6;
+}
+.planning-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.8;
+  padding: 12px 0;
+}
+.planning-check input {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.planning-availability {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 22px;
+}
+.planning-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 28px 0 10px;
+}
+.planning-baseline,
+.planning-principles {
+  background: #fff9;
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+.planning-baseline p,
+.planning-principles p {
+  font-size: 13px;
+  line-height: 1.8;
+  margin: 10px 0;
+}
+.planning-week-data {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 18px 0;
+}
+.planning-week-data > div {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+.planning-week-data strong {
+  font-size: 21px;
+  font-weight: 450;
+}
+.planning-week-data :is(small, span) {
+  font-size: 11px;
+  line-height: 1.65;
+  color: #67715f;
+}
+.planning-decisions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 18px 0;
+}
+.planning-decisions article {
+  background: #fff;
+  padding: 20px;
+  border-radius: 18px;
+}
+.planning-decisions h4 {
+  font-size: 14px;
+  font-weight: 550;
+  margin: 0 0 10px;
+}
+.planning-decisions p,
+.planning-cautions {
+  font-size: 13px;
+  line-height: 1.85;
+}
+.planning-cautions {
+  padding: 18px;
+  border-radius: 16px;
+  background: #f7f7ec;
+  margin: 20px 0;
+}
+.planning-cautions summary {
+  cursor: pointer;
+  font-weight: 500;
+}
+.planning-cautions ul,
+.planning-review .coach-error ul {
+  padding-left: 20px;
+  margin-top: 12px;
+}
+.planning-cautions li {
+  margin: 10px 0;
+}
+.planning-cautions a {
+  text-decoration: underline;
+  color: #46633c;
+}
+.planning-sessions {
+  display: grid;
+  gap: 8px;
+  margin: 20px 0;
+}
+.planning-sessions > details {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+}
+.planning-sessions summary {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+  cursor: pointer;
+  font-size: 12px;
+}
+.planning-sessions summary strong {
+  flex: 1;
+  min-width: 140px;
+  font-weight: 500;
+}
+.planning-sessions .workout-summary {
+  margin-top: 20px;
+}
+.planning-consult {
+  padding: 22px;
+  border-radius: 20px;
+  background: #fff9;
+  margin: 22px 0;
+}
+.planning-consult form {
+  display: grid;
+  gap: 12px;
+}
+.planning-consult textarea {
+  padding: 12px;
+  width: 100%;
+}
+.planning-consult .message {
+  margin-top: 16px;
+}
+.planning-review > h3 {
+  margin: 28px 0 12px;
+}
+@media (max-width: 700px) {
+  .planning-fields,
+  .planning-decisions {
+    grid-template-columns: 1fr;
+  }
+  .planning-availability {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .planning-week-data {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .planning-question {
+    padding: 18px;
+    gap: 10px;
+  }
+  .planning-question h3 {
+    font-size: 18px;
+  }
+  .planning-progress button span {
+    font-size: 9px;
+  }
+  .planning-progress {
+    gap: 3px;
+  }
+  .planning-actions .button {
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+}
+.planning-demo {
+  background: #edf3dc;
+  color: #52613c;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 12px;
+  margin-bottom: 18px;
+}
+
+/* Purpose-first workout authoring, shared with the read-only plan preview. */
+.recipe-form-span {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+.recipe-picker {
+  padding: 22px;
+  background: #eef1e7;
+  border-radius: 24px;
+  margin: 4px 0 14px;
+}
+.recipe-picker > small {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: #67705c;
+}
+.recipe-picker h3 {
+  margin: 8px 0;
+}
+.recipe-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+.recipe-options button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 7px;
+  padding: 16px;
+  border: 1px solid transparent;
+  background: #fafbf8;
+  border-radius: 18px;
+  color: inherit;
+  min-width: 0;
+  line-height: 1.65;
+}
+.recipe-options button[aria-pressed="true"] {
+  border-color: #7c9148;
+  background: #e1edb4;
+}
+.recipe-options strong {
+  font-size: 14px;
+  font-weight: 500;
+}
+.recipe-options span,
+.recipe-options small {
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.recipe-options small {
+  color: #70766a;
+}
+.recipe-review {
+  margin-top: 16px;
+  font-size: 13px;
+  line-height: 1.75;
+}
+.recipe-confirm {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 14px 0;
+}
+.recipe-confirm input {
+  width: 18px !important;
+  height: 18px;
+  flex: 0 0 auto;
+  margin-top: 4px;
+}
+.workout-flow {
+  margin: 20px 0;
+  padding: 18px;
+  border-radius: 20px;
+  background: #f5f7f1;
+  min-width: 0;
+}
+.flow-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.flow-heading h4 {
+  margin: 0;
+}
+.flow-heading small {
+  font-size: 11px;
+  color: #72796a;
+}
+.workout-flow-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.workout-flow-list > li {
+  flex: 1 1 145px;
+  min-width: 0;
+  background: #fff;
+  border-radius: 14px;
+  padding: 12px;
+  border-top: 3px solid #c0cf88;
+}
+.workout-flow-list .flow-repeat,
+.workout-flow-list .flow-sequence {
+  flex-basis: 100%;
+  background: #edf0e5;
+}
+.workout-flow-list .flow-recovery,
+.workout-flow-list .flow-cooldown {
+  border-color: #bbd6e4;
+}
+.workout-flow-list .flow-warmup {
+  border-color: #ead9ae;
+}
+.workout-flow-list li > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.workout-flow-list span,
+.workout-flow-list small {
+  font-size: 11px;
+  color: #69725e;
+}
+.workout-flow-list strong {
+  font-size: 13px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.workout-flow-list b {
+  font-size: 15px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.workout-flow-list .workout-flow-list {
+  margin-top: 12px;
+}
+.workout-step-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 4px;
+  cursor: pointer;
+}
+.workout-step-summary span {
+  flex: 1;
+  min-width: 110px;
+  font-weight: 500;
+  font-size: 13px;
+}
+.workout-step-summary strong {
+  font-weight: 500;
+  font-size: 13px;
+}
+.workout-step-summary small {
+  font-size: 11px;
+  color: #717866;
+  padding: 5px 9px;
+  background: #edf0e7;
+  border-radius: 12px;
+}
+.workout-step[open] > summary {
+  margin-bottom: 18px;
+}
+.workout-explanation {
+  margin: 14px 0;
+}
+.workout-explanation > summary {
+  cursor: pointer;
+  font-size: 13px;
+}
+.duration-input {
+  display: flex;
+  gap: 6px;
+  min-width: 0;
+}
+.duration-input > label {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+}
+.duration-input input {
+  width: 100%;
+  min-width: 0;
+  padding-right: 27px !important;
+  font-variant-numeric: tabular-nums;
+}
+.duration-input label > span {
+  position: absolute;
+  right: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 11px;
+  color: #737c67;
+  pointer-events: none;
+}
+.range-toggle {
+  align-self: end;
+  min-height: 42px;
+}
+@media (max-width: 600px) {
+  .recipe-picker {
+    padding: 16px;
+  }
+  .recipe-options {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .workout-flow {
+    padding: 12px;
+  }
+  .workout-flow-list > li {
+    flex-basis: 100%;
+  }
+  .duration-input input {
+    padding-left: 8px !important;
+    padding-right: 24px !important;
+  }
+}
+
+/* All large overview values share the approved 5×7 dot numerals. */
+.page-overview .metric-card > strong {
+  font-family: "Stride Dots", "Manrope", sans-serif;
+  font-variation-settings: normal;
+  font-weight: 400;
+  font-size: 36px;
+  letter-spacing: 0;
+}
+.link-panel h3 > svg {
+  width: 19px;
+  height: 19px;
+  min-width: 19px;
+  flex: 0 0 19px;
+  display: inline-block;
+}
+.overview-period-heading {
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+.overview-period-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.period-segment {
+  display: flex;
+  background: #dfe3dc;
+  padding: 4px;
+  border-radius: 22px;
+}
+.period-segment button {
+  border: 0;
+  border-radius: 18px;
+  padding: 8px 14px;
+  background: transparent;
+  font-size: 12px;
+}
+.period-segment button[aria-pressed="true"] {
+  background: white;
+}
+.overview-date {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  align-items: center;
+}
+.overview-date input {
+  width: 135px;
+  border: 0;
+  background: transparent;
+  color: #6c7468;
+  padding: 2px;
+  font-size: 11px;
+}
+.analysis-disclosure > summary {
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 6px 0;
+}
+.analysis-disclosure[open] > summary {
+  margin-bottom: 20px;
+}
+.analysis-section > .helper { margin:16px 0; }
+.analysis-section > .helper + .analysis-stats { margin-top:24px; }
+.analysis-section > .analysis-stats + .helper { margin-top:20px; margin-bottom:0; }
+.activity-metric-chart > .helper { margin:12px 0 0; }
+.training-plan-overview > .muted { font-size:12px; line-height:1.7; margin:12px 0 0; }
+.page-progress .card > :is(h3, .row) + .recharts-responsive-container { margin-top:16px; }
+.page-progress .card > .row { flex-wrap:wrap; gap:12px; }
+.page-progress .card > .helper { margin:16px 0 0; }
+.conversation-heading > small { display:block; margin-top:4px; font-size:12px; line-height:1.6; }
+.secondary-metric {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  margin: 12px 0;
+}
+.secondary-metric select {
+  max-width: 100%;
+  padding: 8px 12px;
+}
+.activity-insights .insight-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (max-width: 600px) {
+  .overview-period-controls {
+    width: 100%;
+    gap: 6px;
+  }
+  .overview-period-controls .period-segment {
+    flex-basis: 100%;
+    justify-content: center;
+  }
+  .overview-date {
+    flex: 1;
+  }
+  .overview-period-controls > .button {
+    flex: 1;
+  }
+}
+.period-shortcuts {
+  display: flex;
+  gap: 8px;
+}
+@media (max-width: 600px) {
+  .overview-period-controls {
+    display: grid;
+    grid-template-columns: 36px minmax(0, 1fr) 36px;
+    gap: 10px 6px;
+  }
+  .overview-period-controls .period-segment,
+  .overview-period-controls .period-shortcuts {
+    grid-column: 1 / -1;
+  }
+  .period-shortcuts .button {
+    flex: 1;
+  }
+  .overview-date > span {
+    white-space: nowrap;
+    font-size: 11px;
+  }
+}
+
+.overview-period-picker {
+  position: relative;
+}
+.period-trigger {
+  border: 1px solid #ffffffc4;
+  gap: 9px;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  cursor: pointer;
+  padding: 12px 16px;
+}
+.period-trigger-unit {
+  font-size: 10px;
+  color: #75806f;
+  padding-left: 9px;
+  border-left: 1px solid #dce0d8;
+}
+.period-popover {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  width: 330px;
+  z-index: 45;
+  padding: 22px;
+  background: #fafbf8;
+  border: 1px solid #fff;
+  border-radius: 24px;
+  box-shadow:
+    0 18px 60px #26332426,
+    0 2px 10px #2633240a;
+}
+.period-popover h3 {
+  margin: 0 0 16px;
+  font-size: 15px;
+}
+.period-presets {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  margin-bottom: 20px;
+}
+.period-presets button {
+  padding: 8px 3px;
+  font-size: 11px;
+  border: 0;
+  background: #edf0e8;
+  border-radius: 14px;
+}
+.period-presets button[aria-pressed="true"] {
+  background: #dfedae;
+  color: #324021;
+}
+.period-popover .period-segment {
+  width: 100%;
+  margin-bottom: 18px;
+}
+.period-popover .period-segment button {
+  flex: 1;
+}
+.period-date-row {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) 32px;
+  gap: 8px;
+  align-items: center;
+}
+.period-date-row label {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 11px;
+  color: #6c7668;
+}
+.period-date-row input {
+  width: 100%;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid #e4e8de;
+  border-radius: 12px;
+  background: white;
+  color: #263023;
+  font: inherit;
+  font-size: 13px;
+}
+.period-preview {
+  margin: 16px 0;
+  font-size: 12px;
+  text-align: center;
+  color: #65745b;
+}
+.period-popover-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 1px solid #e6e9e0;
+}
+@media (max-width: 600px) {
+  .overview-period-heading {
+    align-items: flex-start;
+  }
+  .period-trigger {
+    padding: 10px 12px;
+    font-size: 11px;
+    max-width: 100%;
+  }
+  .period-popover {
+    position: fixed;
+    top: 50%;
+    left: 16px;
+    right: 16px;
+    width: auto;
+    max-height: calc(100dvh - 100px);
+    overflow-y: auto;
+    transform: translateY(-50%);
+  }
+}
+/* Linked completion status is inline text, never a full-size illustration. */
+.link-panel p > svg {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  max-width: 18px;
+  display: inline-block;
+  vertical-align: -3px;
+  margin-right: 5px;
+}
+.segment-charts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+  margin: 24px 0 32px;
+}
+.activity-metric-chart {
+  min-width: 0;
+  margin: 24px 0;
+}
+.segment-charts > .activity-metric-chart {
+  margin: 0;
+}
+.activity-metric-chart > .analysis-toolbar {
+  margin-bottom: 16px;
+  gap: 12px;
+  flex-wrap: nowrap;
+}
+.activity-metric-chart .analysis-toolbar h4 {
+  margin: 0;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.activity-metric-chart .analysis-toolbar small {
+  font-size: 11px;
+  color: #7d8479;
+}
+.training-response .activity-insights {
+  margin-top: 14px;
+}
+.training-response .activity-insights > .analysis-heading {
+  display: none;
+}
+.training-response .analysis-columns {
+  margin-top: 18px;
+}
+.training-response .analysis-columns > .analysis-section {
+  background: #f7f8f3;
+}
+@media (max-width: 700px) {
+  .segment-charts {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+}
+.period-popover .period-date-row {
+  grid-template-columns: 32px minmax(0, 1fr) 32px;
+  gap: 6px;
+  margin-top: 22px;
+}
+.period-range-label {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.7;
+  text-align: center;
+  color: #35412f;
+}
+.period-current-row {
+  display: flex;
+  justify-content: center;
+  margin: 14px 0 20px;
+}
+.period-current {
+  padding: 7px 15px;
+  border: 1px solid #e0e6d5;
+  border-radius: 16px;
+  background: #edf2df;
+  color: #4a5e37;
+  font-size: 11px;
+}
+.period-current:disabled {
+  opacity: 0.6;
+  cursor: default;
+  background: #f0f2eb;
+}
+
+/* Keep mobile form text readable without iOS focus zoom. */
+@media (max-width: 700px) {
+  body :is(main, .modal) :is(
+    input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+    select:not(.review-perspective):not(.analysis-select),
+    textarea
+  ) {
+    font-size: 16px;
+    min-height: 44px;
+  }
+}
+
+/* Normalize native date controls as well as text/select fields inside forms.
+   Safari's date editor must not contribute an intrinsic minimum width. */
+body :is(.field, .planning-field, .workout-field) > :is(input, select, textarea) {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  min-inline-size: 0;
+  margin-inline: 0;
+}
+body :is(main, .modal) input:is([type="date"], [type="time"], [type="datetime-local"], [type="month"]) {
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  text-align: left;
+}
+body :is(main, .modal) input::-webkit-date-and-time-value {
+  min-width: 0;
+  min-height: 1.4em;
+  text-align: left;
+}
+body :is(main, .modal) input::-webkit-datetime-edit {
+  min-width: 0;
+  padding: 0;
+}
+@media (max-width: 700px) {
+  body :is(.field, .planning-field, .workout-field) > :is(input:not([type="checkbox"]):not([type="radio"]), select),
+  body .duration-input input {
+    height: 48px;
+    min-height: 48px;
+    padding-block: 10px;
+    line-height: 1.4;
+  }
+  body :is(.field, .planning-field, .workout-field) > textarea {
+    min-height: 96px;
+    line-height: 1.5;
+    resize: vertical;
+  }
+}
+
+.training-plan-space { display:grid; gap:20px; }
+.training-plan-space h2,.training-plan-space h3 { margin:0; }
+.training-plan-space .row.between { flex-wrap:wrap; gap:12px; }
+.training-plan-stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin:24px 0; }
+.training-plan-stats > div { display:flex; flex-direction:column; gap:10px; }
+.training-plan-stats strong { font-size:30px; font-weight:400; }
+.training-plan-stats small { font-size:13px; margin-left:6px; }
+.training-plan-overview progress { width:100%; height:8px; accent-color:#869871; }
+.training-plan-empty { display:flex; flex-direction:column; align-items:center; text-align:center; padding:40px 28px; gap:16px; }
+.training-plan-space .training-plan-empty h2 { font-size:22px; line-height:1.45; font-weight:500; text-wrap:balance; }
+.training-plan-empty > p { margin:0; max-width:440px; font-size:14px; line-height:1.8; color:#626e64; word-break:keep-all; overflow-wrap:anywhere; }
+.training-plan-empty > .button { margin:4px 0; min-height:44px; font-size:13px; }
+.training-plan-empty > p.muted { font-size:12px; line-height:1.7; max-width:400px; }
+.training-plan-actions { flex-wrap:wrap; gap:12px; }
+.training-plan-sessions { margin-top:18px; display:grid; gap:10px; }
+.training-plan-session { display:grid; grid-template-columns:110px minmax(0,1fr) auto; gap:16px; align-items:center; text-align:left; background:#f3f5ef; border-radius:16px; padding:16px; width:100%; }
+.training-plan-session.is-complete { background:#e9f1e4; }
+.training-plan-session strong { display:block; overflow-wrap:anywhere; font-weight:500; }
+.training-plan-session small { display:block; margin-top:6px; line-height:1.7; }
+.training-plan-date,.training-plan-status { font-size:12px; }
+@media(max-width:700px) {
+ .training-plan-session { grid-template-columns:minmax(0,1fr) auto; gap:8px 12px; }
+ .training-plan-date { grid-column:1/-1; }
+ .training-plan-stats { gap:10px; }
+ .training-plan-stats strong { font-size:25px; }
+ .training-plan-stats span { font-size:12px; }
+}

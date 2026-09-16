@@ -1,0 +1,16 @@
+{
+  "id": "/",
+  "name": "Stride — 나만의 러닝 스페이스",
+  "short_name": "Stride",
+  "description": "달리기 기록, 훈련 계획과 나만의 러닝 코치",
+  "lang": "ko",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#e8eff6",
+  "theme_color": "#a4b8ca",
+  "icons": [
+    { "src": "/icons/stride-v3-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/stride-v3-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "name": "stride",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -k \"DEV_ORIGIN=http://127.0.0.1:4317 node server/index.mjs\" \"vite --host 127.0.0.1 --port 4317\"",
+    "build": "vite build && node scripts/prepare-sites-build.mjs",
+    "preview": "vite preview",
+    "test:sites": "node --test tests/sites-worker.test.mjs",
+    "test:build": "node --test tests/build-loading.test.mjs",
+    "test:garmin": ".venv/bin/python -m unittest discover -s tests -p 'test_garmin_bridge.py'",
+    "start": "node server/index.mjs",
+    "test": "node --test tests/access.test.mjs tests/backup.test.mjs tests/api.test.mjs tests/coaching.test.mjs tests/codex.test.mjs tests/domain.test.mjs tests/http-client.test.mjs tests/markdown.test.mjs tests/metrics.test.mjs tests/period.test.mjs tests/search-selection.test.mjs tests/plan-progress.test.mjs tests/planning-api.test.mjs tests/pwa.test.mjs tests/time.test.mjs tests/training-policy.test.mjs tests/training-spectrum.test.mjs tests/ui-motion.test.mjs tests/workout-recipes.test.mjs",
+    "macos:install": "node scripts/install-macos.mjs",
+    "macos:uninstall": "node scripts/install-macos.mjs --uninstall",
+    "backup": "node scripts/backup.mjs",
+    "format": "prettier --write src server tests scripts/*.mjs vite.config.js",
+    "doctor": "node scripts/doctor.mjs",
+    "check:privacy": "node scripts/check-public-files.mjs"
+  },
+  "dependencies": {
+    "@phosphor-icons/react": "^2.1.10",
+    "@vitejs/plugin-react": "5.0.4",
+    "concurrently": "^10.0.5",
+    "express": "^5.2.1",
+    "lucide-react": "^1.46.0",
+    "maplibre-gl": "^6.9.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "react-markdown": "^10.1.0",
+    "recharts": "^3.10.1",
+    "remark-cjk-friendly": "^2.3.1",
+    "remark-cjk-friendly-gfm-strikethrough": "^2.3.1",
+    "remark-gfm": "^4.0.1",
+    "vite": "6.4.3",
+    "zod": "^4.6.2"
+  },
+  "devDependencies": {
+    "prettier": "^3.9.6"
+  },
+  "description": "개인 노트북에서 실행하는 러닝 기록·훈련 계획·AI 코칭 웹앱",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24.0.0 <25"
+  }
+}
